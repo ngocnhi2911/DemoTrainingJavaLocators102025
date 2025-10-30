@@ -129,7 +129,7 @@ public class LocatorsCRM {
 
     public String labelLeadValue = "//label[@for='lead_value']";
     public String inputLeadValue = "//div[@data-toggle='tooltip']//input[@name='lead_value']";
-    public String iconLeadValue = "/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[7]/div[6]/div/div";
+
 
     public String labelDefaultLanguage = "//label[@for='default_language']";
     public String dropdownDefaultLanguage = "//button[@data-id='default_language']";
@@ -144,7 +144,7 @@ public class LocatorsCRM {
 
     public String labelDateContacted = "//label[@for='custom_contact_date']";
     public String inputDateContacted = "//input[@id='custom_contact_date']";
-    public String iconDateContacted = "/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[9]/div[2]/div/div[1]/div/div/div";
+
 
     public String labelPublic = "//label[@for='lead_public']";
     public String checkboxPublic = "//input[@id='lead_public']";
