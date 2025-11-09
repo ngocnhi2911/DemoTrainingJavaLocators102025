@@ -24,6 +24,13 @@ public class LocatorsTasksCRM {
     public static String buttonNewTasks= "//a[normalize-space()='New Task']";
 
 
+    public static String inputSearch = "//div[@id='tasks_filter']//input[@type='search']";
+    // Tìm kiếm phần tử đầu tiên của bảng
+    public static String firstRowItemTasks = "//table[@id='tasks']//tbody/tr[1]/td[3]/a";
+    public static String iconCloseProfile = "//div[@id='task-modal']//button[@class='close']";
+
+    public static String firstRow = "//table[@id='tasks']//tbody/tr[1]/td[3]";
+
     // Locators for Add New Leads Page
 
     public static String checkboxPublic = "//input[@id='task_is_public']";
@@ -91,7 +98,10 @@ public class LocatorsTasksCRM {
     public static String labelValueForRepeatTo = "//label[@for='rel_id']";
     public static String dropdownValueForRepeatTo = "//button[@data-id='rel_id']";
     public static String inputSearchValueForRepeatTo = "//button[@data-id='rel_id']/following-sibling::div//input[@type='search']";
-
+    public static String getValueForRepeatTo(String valueForRepeatTo) {
+        String xpathValueForRepeatTo = "//button[@data-id='rel_id']/following-sibling::div//span[normalize-space()='"+valueForRepeatTo +"']";
+        return xpathValueForRepeatTo;
+    }
 
     public static String labelAssignees = "//label[@for='assignees']";
     public static String dropdownAssignees = "//button[@data-id='assignees']";
@@ -113,7 +123,7 @@ public class LocatorsTasksCRM {
 
     public static String labelTag = "//label[@for='tags']";
     public static String inputTag = "//div[@id='inputTagsWrapper']//input[@placeholder='Tag']";
-    public static String dropdownTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']";
+    public static String listdropdownTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div";
     public static String getValueTag (String valueTag ) {
         String xpathTag  = "//input[@id='tags']/following-sibling::ul[@id='ui-id-2']//div[normalize-space()='" +valueTag+ "']";
         return xpathTag ;

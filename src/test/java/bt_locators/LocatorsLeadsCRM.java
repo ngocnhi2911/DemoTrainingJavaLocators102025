@@ -41,6 +41,8 @@ public class LocatorsLeadsCRM {
     public static String firstRowItemLeads = "//table[@id='leads']//tbody/tr[1]/td[3]/a";
     public static String iconCloseProfile = "//div[@id='lead-modal']//button[@class='close']";
 
+    public static String firstRow = "//table[@id='leads']//tbody/tr[1]/td[3]";
+
     //----------Locators for Leads button
 
     // dùng hàm, vì giá trị có thể thay đổi, dùng hàm để truyền giá trị vào

@@ -173,7 +173,7 @@ public class AddNewLeads extends LoginCRM {
         Thread.sleep(2000);
 
         String firstRowLeads = driver.findElement(By.xpath(LocatorsLeadsCRM.firstRowItemLeads)).getText();
-        System.out.println("First row customer: " + firstRowLeads);
+        System.out.println("First row leads: " + firstRowLeads);
         Thread.sleep(2000);
     }
 
