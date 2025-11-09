@@ -120,6 +120,7 @@ public class LocatorsLeadsCRM {
         String xpathTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div[text()='" + valueTag + "']";
         return xpathTag;
     }
+    public static String inputEditTag = "//div[@id='inputTagsWrapper']//li/span";
 
 
     public static String labelName = "//form[@id='lead_form']//div[@app-field-wrapper='name']/label[@for='name']";
@@ -180,6 +181,8 @@ public class LocatorsLeadsCRM {
     public static String labelDateContacted = "//label[@for='custom_contact_date']";
     public static String inputDateContacted = "//input[@id='custom_contact_date']";
     public static String iconDateContacted = "/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[9]/div[2]/div/div[1]/div/div/div";
+
+    public static String inputLastContacted = "//label[@for='lastcontact']/following-sibling::div/input[@id='lastcontact']";
 
     public static String labelPublic = "//label[@for='lead_public']";
     public static String checkboxPublic = "//input[@id='lead_public']";
