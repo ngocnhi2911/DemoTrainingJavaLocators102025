@@ -303,7 +303,8 @@ public class AddNewLeads extends LoginCRM {
     @Test
     public void testAddAndVerifyLead() throws InterruptedException{
         openNewLeadsPage();
-        testBT test = new testBT();
+
+        AddNewLeads addLead = new AddNewLeads();
 
         String status = "Active";
         String source = "Google";
@@ -325,12 +326,12 @@ public class AddNewLeads extends LoginCRM {
         String description = "htest add new lead";
         String dateContacted = "10-11-2025";
 
-        test.addNewLeads(status, source, assigned, tag, name, address, position, city,
+        addLead.addNewLeads(status, source, assigned, tag, name, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
         searchLeads("Yến Nhi 7");
 
-        boolean ok = test.verifyLeadData(status, source, assigned, tag, name, address, position, city,
+        boolean ok = addLead.verifyLeadData(status, source, assigned, tag, name, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
         Thread.sleep(2000);
