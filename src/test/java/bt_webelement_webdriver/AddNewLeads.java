@@ -336,7 +336,6 @@ public class AddNewLeads extends LoginCRM {
                 company, description, dateContacted);
         Thread.sleep(2000);
 
-        closeDriver();
     }
 
 }
