@@ -120,7 +120,8 @@ public class LocatorsLeadsCRM {
         String xpathTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div[text()='" + valueTag + "']";
         return xpathTag;
     }
-    public static String inputEditTag = "//div[@id='inputTagsWrapper']//li/span";
+  //  public static String inputEditTag = "//div[@id='inputTagsWrapper']//li/span";
+    public static String inputEditTag = "//div[@id='inputTagsWrapper']/input[@id='tags']";
 
 
     public static String labelName = "//form[@id='lead_form']//div[@app-field-wrapper='name']/label[@for='name']";

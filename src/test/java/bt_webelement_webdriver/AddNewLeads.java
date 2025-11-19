@@ -16,18 +16,43 @@ import static bt_locators.LocatorsLeadsCRM.getValueCountry;
 
 public class AddNewLeads extends LoginCRM {
 
-    public static void openNewLeadsPage() throws InterruptedException {
-        driver.findElement(By.xpath(LocatorsLeadsCRM.menuLeads)).click();
+//    public static void openNewLeadsPage() throws InterruptedException {
+//        driver.findElement(By.xpath(LocatorsLeadsCRM.menuLeads)).click();
+//        Thread.sleep(2000);
+//        driver.findElement(By.xpath(LocatorsLeadsCRM.buttonNewLead)).click();
+//    }
+
+    public static void verifyDisplay(String field, String messageTrue, String messageFalse) {
+        boolean check = driver.findElement(By.xpath(field)).isDisplayed();
+        if (check) {
+            System.out.println(messageTrue);
+        } else {
+            System.out.println(messageFalse);
+        }
+    }
+
+    public static void verifyMenuLead() throws InterruptedException {
+        //click menu Lead
+        driver.findElement(By.xpath(menuLeads)).click();
         Thread.sleep(2000);
-        driver.findElement(By.xpath(LocatorsLeadsCRM.buttonNewLead)).click();
+        verifyDisplay(headerLeadPage, "Đã tới trang Leads", "FAILED!!! Không truy cập được vào trang Leads");
+
+    }
+
+    public static void verifyBtnAddNewLead() throws InterruptedException {
+        //click button New Lead
+        driver.findElement(By.xpath(buttonNewLead)).click();
+        Thread.sleep(1000);
+        verifyDisplay(headerAddNewLead, "Mở pop-up Add new lead thành công", "FAILED!!! Không mở được pop-up Add new lead");
+
     }
 
 
     public static void addNewLeads(String status, String source, String assigned, String tag, String name, String address, String position,
                                    String city, String emailAddress, String state, String website, String country, String phone, String zipCode,
                                    String leadValue, String language, String company, String description, String dateContacted) throws InterruptedException {
-        openNewLeadsPage();
-        Thread.sleep(1000);
+//        openNewLeadsPage();
+//        Thread.sleep(1000);
 
         //------------------- Xác định dropdown Status -- Cách 1---------------------------
         // B1. Click vào dropdown
@@ -178,8 +203,6 @@ public class AddNewLeads extends LoginCRM {
     public static void searchLeads(String leadsName) throws InterruptedException {
         driver.findElement(By.xpath(LocatorsLeadsCRM.iconCloseProfile)).click();
         Thread.sleep(3000);
-        driver.findElement(By.xpath(LocatorsLeadsCRM.menuLeads)).click();
-        Thread.sleep(2000);
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).clear();
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).sendKeys(leadsName);
         Thread.sleep(2000);
@@ -190,7 +213,29 @@ public class AddNewLeads extends LoginCRM {
 
     }
 
-    public boolean verifyLeadData(
+    //Hàm so sánh giá trị đã thêm mới trong màn edit
+    public static void compareFieldAttribute(String expectedValue, String xpathActual, String attributeActual) {
+        String expected = expectedValue;
+        String actual = driver.findElement(By.xpath(xpathActual)).getAttribute(attributeActual);
+        if (actual.trim().equalsIgnoreCase(expected.trim())) {
+            System.out.println("Giá trị hiển thị đúng: " + actual);
+        } else {
+            System.out.println("FAIL: Giá trị mong muốn là: " + expected + " nhưng giá trị thực tế là: " + actual);
+        }
+    }
+
+    public static void verifyCheckboxSelected(String checkbox) {
+        boolean checked = driver.findElement(By.xpath(checkbox)).isSelected();
+        if (checked) {
+            System.out.println("Checkbox is selected: " + checked);
+        } else {
+            System.out.println("Checkbox is selected: " + checked);
+
+        }
+    }
+
+
+    public static void editLead(
             String status, String source, String assigned, String tag,String name, String address,
             String position, String city, String emailAddress,
             String state, String website, String country, String phone,
@@ -206,105 +251,46 @@ public class AddNewLeads extends LoginCRM {
         driver.findElement(By.xpath(linkEdit)).click();
         Thread.sleep(3000);
 
-        boolean isSame = true;
-
-        // Ví dụ: status là dropdown -> getText()
-        String actualStatus = driver.findElement(By.xpath(dropdownStatus)).getText();
-        isSame = compareField("Status", status, actualStatus) && isSame;
-
-        // source cũng là dropdown
-        String actualSource = driver.findElement(By.xpath(dropdownSource)).getText();
-        isSame = compareField("Source", source, actualSource) && isSame;
-
-        // assigned là dropdown
-        String actualAssigned = driver.findElement(By.xpath(dropdownAssigned)).getText();
-        isSame = compareField("Assigned", assigned, actualAssigned) && isSame;
-
-        // tag là textbox -> getAttribute("value")
-        String actualTag = driver.findElement(By.xpath(inputEditTag)).getText();
-        isSame = compareField("Tag", tag, actualTag) && isSame;
-
-        // name – textbox
-        String actualName = driver.findElement(By.xpath(inputName)).getAttribute("value");
-        isSame = compareField("Name", name, actualName) && isSame;
-
-        String actualAddress = driver.findElement(By.xpath(inputAddress)).getText();
-        isSame = compareField("Address", address, actualAddress) && isSame;
-
-        // position – textbox
-        String actualPosition = driver.findElement(By.xpath(inputPosition)).getAttribute("value");
-        isSame = compareField("Position", position, actualPosition) && isSame;
-
-        // city – textbox
-        String actualCity = driver.findElement(By.xpath(inputCity)).getAttribute("value");
-        isSame = compareField("City", city, actualCity) && isSame;
-
-        // email – textbox
-        String actualEmail = driver.findElement(By.xpath(inputEmailAddress)).getAttribute("value");
-        isSame = compareField("Email", emailAddress, actualEmail) && isSame;
-
-        // state – textbox
-        String actualState = driver.findElement(By.xpath(inputState)).getAttribute("value");
-        isSame = compareField("State", state, actualState) && isSame;
-
-        // website – textbox
-        String actualWebsite = driver.findElement(By.xpath(inputWebsite)).getAttribute("value");
-        isSame = compareField("Website", website, actualWebsite) && isSame;
-
-        // country – dropdown
-        String actualCountry = driver.findElement(By.xpath(dropdownCountry)).getText();
-        isSame = compareField("Country", country, actualCountry) && isSame;
-
-        // phone – textbox
-        String actualPhone = driver.findElement(By.xpath(inputPhone)).getAttribute("value");
-        isSame = compareField("Phone", phone, actualPhone) && isSame;
-
-        // zipCode – textbox
-        String actualZip = driver.findElement(By.xpath(inputZipCode)).getAttribute("value");
-        isSame = compareField("Zip Code", zipCode, actualZip) && isSame;
-
-        // leadValue – textbox
-        String actualLeadValue = driver.findElement(By.xpath(inputLeadValue)).getAttribute("value");
-        isSame = compareField("Lead Value", leadValue, actualLeadValue) && isSame;
-
-        // language – textbox
-        String actualLanguage = driver.findElement(By.xpath(dropdownDefaultLanguage)).getText();
-        isSame = compareField("Language", language, actualLanguage) && isSame;
-
-        // company – textbox
-        String actualCompany = driver.findElement(By.xpath(inputCompany)).getAttribute("value");
-        isSame = compareField("Company", company, actualCompany) && isSame;
-
-        // description – textarea
-        String actualDescription = driver.findElement(By.xpath(inputDescription)).getAttribute("value");
-        isSame = compareField("Description", description, actualDescription) && isSame;
-
-        //  dateContacted – textbox/date input
-        String actualDateContacted = driver.findElement(By.xpath(LocatorsLeadsCRM.inputDateContacted)).getAttribute("value");
-        isSame = compareField("Date Contacted", dateContacted, actualDateContacted) && isSame;
-
-
-        return isSame;
+        compareFieldAttribute(status, dropdownStatus, "title");
+        compareFieldAttribute(source, dropdownSource, "title");
+        compareFieldAttribute(assigned, dropdownAssigned, "title");
+        compareFieldAttribute(tag, inputEditTag, "value");
+        compareFieldAttribute(name, inputName, "value");
+        compareFieldAttribute(address, inputAddress, "value");
+        compareFieldAttribute(position, inputPosition, "value");
+        compareFieldAttribute(city, inputCity, "value");
+        compareFieldAttribute(emailAddress, inputEmailAddress, "value");
+        compareFieldAttribute(state, inputState, "value");
+        compareFieldAttribute(website, inputWebsite, "value");
+        compareFieldAttribute(country, dropdownCountry, "title");
+        compareFieldAttribute(phone, inputPhone, "value");
+        compareFieldAttribute(zipCode, inputZipCode, "value");
+        compareFieldAttribute(leadValue + ".00", inputLeadValue, "value");
+        compareFieldAttribute(language, dropdownDefaultLanguage, "title");
+        compareFieldAttribute(company, inputCompany, "value");
+        compareFieldAttribute(description, inputDescription, "value");
+        compareFieldAttribute(dateContacted, inputLastContacted, "value"); //hệ thống bug
+        verifyCheckboxSelected(checkboxPublic);
     }
 
-    private boolean compareField(String fieldName, String expected, String actual) {
-        if (expected == null) expected = "";
-        if (actual == null) actual = "";
-
-        if (!expected.equals(actual)) {
-            System.out.println("❌" + fieldName + " không khớp. Expected: [" + expected + "] | Actual: [" + actual + "]");
-            return false;
-        } else {
-            System.out.println("✅" + fieldName + " khớp");
-            return true;
-        }
-    }
+//    private boolean compareField(String fieldName, String expected, String actual) {
+//        if (expected == null) expected = "";
+//        if (actual == null) actual = "";
+//
+//        if (!expected.equals(actual)) {
+//            System.out.println("❌" + fieldName + " không khớp. Expected: [" + expected + "] | Actual: [" + actual + "]");
+//            return false;
+//        } else {
+//            System.out.println("✅" + fieldName + " khớp");
+//            return true;
+//        }
+//    }
 
     @Test
     public void testAddAndVerifyLead() throws InterruptedException{
-        openNewLeadsPage();
+        //openNewLeadsPage();
 
-        AddNewLeads addLead = new AddNewLeads();
+      //  AddNewLeads addLead = new AddNewLeads();
 
         String status = "Active";
         String source = "Google";
@@ -324,14 +310,64 @@ public class AddNewLeads extends LoginCRM {
         String language = "Vietnamese";
         String company = "NODO JSC";
         String description = "htest add new lead";
-        String dateContacted = "10-11-2025";
+        String dateContacted = "10-11-2025 00:00:00";
 
-        addLead.addNewLeads(status, source, assigned, tag, name, address, position, city,
+        //click menu Lead
+        verifyMenuLead();
+
+        //click btn addnewLead
+        verifyBtnAddNewLead();
+
+       addNewLeads(status, source, assigned, tag, name, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
-        searchLeads("Yến Nhi 7");
+       Thread.sleep(2000);
 
-        boolean ok = addLead.verifyLeadData(status, source, assigned, tag, name, address, position, city,
+        searchLeads("Yến Nhi 7");
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testEditLead() throws InterruptedException{
+        //openNewLeadsPage();
+
+        //  AddNewLeads addLead = new AddNewLeads();
+
+        String status = "Active";
+        String source = "Google";
+        String assigned = "Admin Anh Tester";
+        String tag = "JSC_NEW";
+        String name = "Yến Nhi 10";
+        String address = "Đại Linh";
+        String position = "Tester";
+        String city = "Việt Nam";
+        String emailAddress = "ngocnhi10@gmail.com";
+        String state = "Hà Nội";
+        String website = "htester.com.vn";
+        String country = "Vietnam";
+        String phone = "0965898989";
+        String zipCode = "0001";
+        String leadValue = "12345";
+        String language = "Vietnamese";
+        String company = "NODO JSC";
+        String description = "htest add new lead";
+        String dateContacted = "10-11-2025 00:00:00";
+
+        //click menu Lead
+        verifyMenuLead();
+
+        //click btn addnewLead
+        verifyBtnAddNewLead();
+
+        addNewLeads(status, source, assigned, tag, name, address, position, city,
+                emailAddress, state, website, country, phone, zipCode, leadValue, language,
+                company, description, dateContacted);
+        Thread.sleep(2000);
+
+        searchLeads("Yến Nhi 10");
+        Thread.sleep(2000);
+
+        editLead(status, source, assigned, tag, name, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
         Thread.sleep(2000);
