@@ -21,7 +21,7 @@ public class LocatorsTasksCRM {
     //Locators for Task Page
     public static String urlTasks = "https://crm.anhtester.com/admin/tasks";
     public static String headerTasksPage = "//span[normalize-space()='Tasks Summary']";
-    public static String buttonNewTasks= "//a[normalize-space()='New Task']";
+    public static String buttonNewTasks = "//a[normalize-space()='New Task']";
 
 
     public static String inputSearch = "//div[@id='tasks_filter']//input[@type='search']";
@@ -29,9 +29,14 @@ public class LocatorsTasksCRM {
     public static String firstRowItemTasks = "//table[@id='tasks']//tbody/tr[1]/td[3]/a";
     public static String iconCloseProfile = "//div[@id='task-modal']//button[@class='close']";
 
+
     public static String firstRow = "//table[@id='tasks']//tbody/tr[1]/td[3]";
 
+    public static String linkEdit = "//table[@id='tasks']/tbody/tr[1]//a[normalize-space()='Edit']";
+    public static String inputEditTag = "//div[@id='inputTagsWrapper']/input[@id='tags']";
+
     // Locators for Add New Leads Page
+    public static String headerAddNewTask = "//div[@id='_task_modal']//h4[normalize-space()='Add new task']";
 
     public static String checkboxPublic = "//input[@id='task_is_public']";
     public static String labelPublic = "//input[@id='task_is_public']/following-sibling::label";

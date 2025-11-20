@@ -21,12 +21,13 @@ public class LocatorsLeadsCRM {
 
     //Locators for menu Leads
     public static String menuLeads = "//span[@class='menu-text' and normalize-space()='Leads']";
+    public static String menuDashboard = "//span[@class='menu-text' and normalize-space()='Dashboard']";
 
     //Locators for Leads Page
 
     public static String urlLeads = "https://crm.anhtester.com/admin/leads";
     public static String buttonNewLead = "//a[normalize-space()='New Lead']";
-    public static String iconLeadsSummary = "//a[normalize-space()='Leads Summary']";
+    public static String iconLeadsSummary = "//a[@data-title='Leads Summary']";
     public static String iconSwitchToKanban = "//a[@data-title='Switch to Kanban']";
     public static String iconFilterBy = "//div[@id='vueApp']//button[@type='button']";
     public static String headerLeadPage = "//h4[normalize-space()='Leads Summary']";
@@ -49,7 +50,7 @@ public class LocatorsLeadsCRM {
     public static String linkView = "//tr[@id='lead_248']//a[normalize-space()='View']";
   //  public static String linkEdit = "//table[@id='leads']//tbody/tr[1]/td[3]/a/following-sibling::div/a[normalize-space()='Edit']";
     public static String linkEdit = "//table[@id='leads']/tbody/tr[1]//a[normalize-space()='Edit']";
-    public static String linkDelete = "//tr[@id='lead_248']//a[normalize-space()='Delete']";
+    public static String linkDelete = "//table[@id='leads']/tbody/tr[1]//a[normalize-space()='Delete']";
 
     public static String buttonPrevious = "//li[@id='leads_previous']/a[text()='Previous']";
     public static String buttonNumber = "//div[@id='leads_paginate']//li[@class='paginate_button active']/a";
@@ -196,7 +197,11 @@ public class LocatorsLeadsCRM {
     public static String buttonSave = "//form[@id='lead_form']/div[2]/button[@id='lead-form-submit']";
 
     public static String alertErrorMessageRequired = "//p[starts-with(text(), 'This field is required.')]";
-    public static String alertErrorMessageValidNumber = "//p[@id='lead_value-error' and text() = 'Please enter a valid number.']";
+    public static String alertErrorMessageLeadValue = "//p[@id='lead_value-error' and text() = 'Please enter a valid number.']";
+    public static String alertErrorMessageEmail = "//div[@app-field-wrapper='email']//p[@id='email-error']";
+
+    public static String headerEditPage = "//div[@id='lead-modal']//h4[@class='modal-title']";
+    public static String tabProfile = "//ul[@role='tablist']/li[@class='active']";
 
 
 
