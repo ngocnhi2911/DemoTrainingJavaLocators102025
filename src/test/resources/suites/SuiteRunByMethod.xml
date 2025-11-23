@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CRM Test" verbose="1">
+    <test name="TestLead">
+        <classes>
+            <class name="bt_webelement_webdriver.AddNewLeads">
+                <methods>
+                    <include name="testAddAndVerifyLead"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="TestTask">
+        <classes>
+            <class name="bt_webelement_webdriver.AddNewTasks">
+                <methods>
+                    <include name="testEditask"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

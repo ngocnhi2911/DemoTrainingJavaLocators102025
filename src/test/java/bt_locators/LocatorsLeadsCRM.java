@@ -77,6 +77,15 @@ public class LocatorsLeadsCRM {
 
     public static String headerAddNewLead = "//h4[normalize-space()='Add new lead']";
 
+    public static String getFirstRowItemLeadName(String leadName) {
+        String xpath = "//table[@id='leads']//a[normalize-space()='" + leadName + "']";
+        return xpath;
+    }
+    public static String iconClosePopupLeadDetail(String headerLeadDetail) {
+        String xpath = "//h4[contains(normalize-space(),'" + headerLeadDetail + "')]/preceding-sibling::button[@aria-label='Close']";
+        return xpath;
+    }
+
 
     //bỏ
     public static String labelStatus = "//label[@for='status']";
@@ -114,15 +123,16 @@ public class LocatorsLeadsCRM {
 
     public static String iconTag = "//div[@id='inputTagsWrapper']//i[@class='fa fa-tag']";
     public static String labelTag = "//label[@for='tags']";
-    public static String inputTag = "//div[@id='inputTagsWrapper']//input[@placeholder='Tag']";
+    //public static String inputTag = "//div[@id='inputTagsWrapper']//input[@placeholder='Tag']";
+    public static String inputTag = "//label[@for='tags']/following-sibling::ul//input[@placeholder='Tag']";
     public static String listdropdownTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']/li[@class='ui-menu-item']/div";
-  //  public static String dropdownListTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div[text()='hieu']";
     public static String getValueTag(String valueTag) {
         String xpathTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div[text()='" + valueTag + "']";
         return xpathTag;
     }
-  //  public static String inputEditTag = "//div[@id='inputTagsWrapper']//li/span";
-    public static String inputEditTag = "//div[@id='inputTagsWrapper']/input[@id='tags']";
+   // public static String inputEditTag = "//div[@id='inputTagsWrapper']/input[@id='tags']";
+    public static String inputEditTag = "//input[@id='tags']";
+    public static String iconCloseTag = "//a[@class='tagit-close' and normalize-space()='×']";
 
 
     public static String labelName = "//form[@id='lead_form']//div[@app-field-wrapper='name']/label[@for='name']";

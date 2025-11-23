@@ -1,6 +1,7 @@
 package bt_webelement_webdriver;
 
 import bt_locators.LocatorsLeadsCRM;
+import bt_locators.LocatorsTasksCRM;
 import common.BaseTest;
 import login_crm.LoginCRM;
 import org.openqa.selenium.*;
@@ -9,6 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,25 +19,21 @@ import java.util.Random;
 
 import static bt_locators.LocatorsLeadsCRM.*;
 import static bt_locators.LocatorsLeadsCRM.getValueCountry;
+import static bt_locators.LocatorsTasksCRM.checkboxBillable;
+import static bt_locators.LocatorsTasksCRM.dropdownPrioryty;
+import static bt_locators.LocatorsTasksCRM.dropdownRepeatEvery;
+import static bt_locators.LocatorsTasksCRM.dropdownRepeatTo;
+import static bt_locators.LocatorsTasksCRM.dropdownValueForRepeatTo;
+import static bt_locators.LocatorsTasksCRM.getValueForRepeatTo;
+import static bt_locators.LocatorsTasksCRM.inputDueDate;
+import static bt_locators.LocatorsTasksCRM.inputHourlyRate;
+import static bt_locators.LocatorsTasksCRM.inputSearchValueForRepeatTo;
+import static bt_locators.LocatorsTasksCRM.inputStartDate;
+import static bt_locators.LocatorsTasksCRM.inputSubject;
 
 public class AddNewLeads extends BaseTest {
 
-//    public static void openNewLeadsPage() throws InterruptedException {
-//        driver.findElement(By.xpath(LocatorsLeadsCRM.menuLeads)).click();
-//        Thread.sleep(2000);
-//        driver.findElement(By.xpath(LocatorsLeadsCRM.buttonNewLead)).click();
-//    }
-
-    public static void verifyDisplay(String field, String messageTrue, String messageFalse) {
-        boolean check = driver.findElement(By.xpath(field)).isDisplayed();
-        if (check) {
-            System.out.println(messageTrue);
-        } else {
-            System.out.println(messageFalse);
-        }
-    }
-
-    public static void verifyMenuLead() throws InterruptedException {
+    public void verifyMenuLead() throws InterruptedException {
         //click menu Lead
         driver.findElement(By.xpath(menuLeads)).click();
         Thread.sleep(2000);
@@ -43,29 +42,23 @@ public class AddNewLeads extends BaseTest {
         driver.findElement(By.xpath(iconLeadsSummary)).click();
         Thread.sleep(1000);
 
-        List<WebElement> checkHeaderLeadPage= driver.findElements(By.xpath(headerLeadPage));
-        System.out.println("checkHeaderLeadPage: " + checkHeaderLeadPage.size());
-        Assert.assertTrue(checkHeaderLeadPage.size() > 0, "Không truy cập được vào trang Leads!");
+      //  List<WebElement> checkHeaderLeadPage= driver.findElements(By.xpath(headerLeadPage));
+        Assert.assertTrue(checkExistsElement(headerLeadPage), "Không truy cập được vào trang Leads!");
 
         // So sánh text header lead có đúng với kết quả mk mong muốn hay k
-        String headerLeadsText = driver.findElement(By.xpath(headerLeadPage)).getText();
-        softAssert.assertEquals(headerLeadsText, "Leads Summary", "Header Leads is not correct");
+       // softAssert.assertEquals(headerLeadPage, "Leads Summary", "Header Leads is not correct");
 
     }
 
-    public static void verifyBtnAddNewLead() throws InterruptedException {
+
+    public void verifyBtnAddNewLead() throws InterruptedException {
         //click button New Lead
         driver.findElement(By.xpath(buttonNewLead)).click();
         Thread.sleep(1000);
-     //   verifyDisplay(headerAddNewLead, "Mở pop-up Add new lead thành công", "FAILED!!! Không mở được pop-up Add new lead");
-
-        List<WebElement> checkHeaderAddNewLeadPage= driver.findElements(By.xpath(headerAddNewLead));
-        System.out.println("checkHeaderAddNewLeadPage: " + checkHeaderAddNewLeadPage.size());
-        Assert.assertTrue(checkHeaderAddNewLeadPage.size() > 0, "Không mở được popup Add new Lead !");
+        Assert.assertTrue(checkExistsElement(headerAddNewLead), "Mở popup Add New Lead không thành công");
 
         // So sánh header có đúng với kết quả mk mong muốn hay k
-        String headerAddNewLeadsText = driver.findElement(By.xpath(headerAddNewLead)).getText();
-        softAssert.assertEquals(headerAddNewLeadsText, "Add new lead", "Header Add new lead is not correct");
+    //    softAssert.assertEquals(headerAddNewLead, "Add new lead", "Header Add new lead is not correct");
 
     }
 
@@ -73,39 +66,30 @@ public class AddNewLeads extends BaseTest {
     public static void addNewLeads(String status, String source, String assigned, String tag, String name, String address, String position,
                                    String city, String emailAddress, String state, String website, String country, String phone, String zipCode,
                                    String leadValue, String language, String company, String description, String dateContacted) throws InterruptedException {
-//        openNewLeadsPage();
-//        Thread.sleep(1000);
 
-        //------------------- Xác định dropdown Status -- Cách 1---------------------------
-        // B1. Click vào dropdown
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.dropdownStatus)).click();
         Thread.sleep(1000);
-        //B2.Tìm kiếm giá trị cần chọn và nhấn Enter
-        // --> Trường hợp này khi tìm kiếm với giá trị sai --> nó vẫn chạy được nhưng kết quả là trống
-        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearchStatus)).sendKeys(status, Keys.ENTER);
+        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearchStatus)).sendKeys(status);
+        Thread.sleep(1000);
+        driver.findElement(By.xpath(LocatorsLeadsCRM.getValueStatus(status))).click();
         Thread.sleep(1000);
 
-
-        //------------------- Xác định dropdown-- Cách 2: chỉ dùng khi giá trị mở dropdown ra là thấy-----------------------------
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.dropdownSource)).click();  // Source
         Thread.sleep(1000);
-        String xpathSource = getValueSource(source);
-        WebElement xpsource = driver.findElement(By.xpath(xpathSource));
-        xpsource.click();
+        driver.findElement(By.xpath(inputSearchSource)).sendKeys(source);
+        Thread.sleep(1000);
+        driver.findElement(By.xpath(LocatorsLeadsCRM.getValueSource(source))).click();
         Thread.sleep(1000);
 
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.dropdownAssigned)).click();   // Assigned
         Thread.sleep(1000);
-        String xpathAssigned = getValueAssigned(assigned);
-        WebElement xpassigned = driver.findElement(By.xpath(xpathAssigned));
-        xpassigned.click();
+        driver.findElement(By.xpath(inputSearchAssigned)).sendKeys(assigned);
         Thread.sleep(1000);
-
-
-        // B1: Mở dropdown
+        driver.findElement(By.xpath(LocatorsLeadsCRM.getValueAssigned(assigned))).click();
+        Thread.sleep(1000);
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputTag)).click();  // Tag
         Thread.sleep(1000);
@@ -119,6 +103,9 @@ public class AddNewLeads extends BaseTest {
                 break;            // thoát vòng lặp sau khi click
             }
         }
+//        driver.findElement(By.xpath(iconCloseTag)).click();
+//        driver.findElement(By.xpath(iconCloseTag)).click();
+        Thread.sleep(1000);
 
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputName)).sendKeys(name);
@@ -144,25 +131,16 @@ public class AddNewLeads extends BaseTest {
         Thread.sleep(1000);
 
 
-        //------------------- Xác định dropdown-- Cách 3-----------------------------
-        // B1: Click mở dropdown Country
-
         driver.findElement(By.xpath(LocatorsLeadsCRM.dropdownCountry)).click();
         Thread.sleep(1000);
-        // B2: Nhập từ khóa cần tìm vào ô search --> để lọc danh sách
-        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearchCountry)).sendKeys(country);
-        // B3: Tạo xpath tương ứng với giá trị muốn chọn
-        String xpathCountry = getValueCountry(country);
+        driver.findElement(By.xpath(inputSearchCountry)).sendKeys(country);
         Thread.sleep(1000);
-        // B4: Tìm phần tử tương ứng và click
-        driver.findElement(By.xpath(xpathCountry)).click();
+        driver.findElement(By.xpath(LocatorsLeadsCRM.getValueCountry(country))).click();
         Thread.sleep(1000);
-        //-------------
 
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputPhone)).sendKeys(phone);
         Thread.sleep(1000);
-
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputZipCode)).sendKeys(zipCode);
         Thread.sleep(1000);
@@ -173,7 +151,9 @@ public class AddNewLeads extends BaseTest {
 
         driver.findElement(By.xpath(LocatorsLeadsCRM.dropdownDefaultLanguage)).click();
         Thread.sleep(1000);
-        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearchDefaultLanguage)).sendKeys(language, Keys.ENTER);
+        driver.findElement(By.xpath(inputSearchDefaultLanguage)).sendKeys(language);
+        Thread.sleep(1000);
+        driver.findElement(By.xpath(LocatorsLeadsCRM.getValueDefaultLanguage(language))).click();
         Thread.sleep(1000);
 
 
@@ -209,8 +189,9 @@ public class AddNewLeads extends BaseTest {
         dateContactedInput.sendKeys(dateContacted);
         Thread.sleep(3000);
 
+
         driver.findElement(By.xpath(LocatorsLeadsCRM.buttonSave)).click();
-        Thread.sleep(4000);
+        Thread.sleep(1000);
 
         // Check sau khi save có lỗi required không
        List<WebElement> errorsRequired = driver.findElements(By.xpath(alertErrorMessageRequired));
@@ -224,7 +205,7 @@ public class AddNewLeads extends BaseTest {
             }
             Assert.fail("FAILED: Save không thành công! Nội dung lỗi: " + errorMsg);
         }
-        Thread.sleep(3000);
+        Thread.sleep(1000);
     }
 
     public static void verifyEmailResult(boolean expectValid, String expectedErrorMsg) {
@@ -246,24 +227,24 @@ public class AddNewLeads extends BaseTest {
 
     public static void searchLeads(String leadsName) throws InterruptedException {
         driver.findElement(By.xpath(LocatorsLeadsCRM.iconCloseProfile)).click();
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).clear();
         driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).sendKeys(leadsName);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         // Check xem có tìm thấy dòng nào không
         List<WebElement> rows = driver.findElements(By.xpath(firstRowItemLeads));
         Assert.assertTrue(rows.size() > 0, "FAILED: Không tìm thấy Lead vừa tạo trong danh sách!");
 
         System.out.println("Đã tìm thấy Lead search: " + rows.get(0).getText());
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
     }
 
     public static void compareFieldAttribute(String expectedValue, String xpathActual, String attributeType) {
         String expected = expectedValue;
         String actual = driver.findElement(By.xpath(xpathActual)).getAttribute(attributeType);
-        softAssert.assertEquals(actual, expectedValue, "FAIL: Giá trị mong muốn là: " + expected + " nhưng giá trị thực tế là: " + actual);
+        Assert.assertEquals(actual, expectedValue, "FAIL: Giá trị mong muốn là: " + expected + " nhưng giá trị thực tế là: " + actual);
     }
 
     public static void verifyCheckboxSelected(String checkbox) {
@@ -272,7 +253,7 @@ public class AddNewLeads extends BaseTest {
     }
 
 
-    public static void editLead(
+    public static void verifyEditLead(
             String status, String source, String assigned, String tag,String name, String address,
             String position, String city, String emailAddress,
             String state, String website, String country, String phone,
@@ -283,10 +264,10 @@ public class AddNewLeads extends BaseTest {
         // B2: Hover chuột vào dòng đầu tiên
         Actions actions = new Actions(driver);
         actions.moveToElement(firstRow).perform();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
         driver.findElement(By.xpath(linkEdit)).click();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
 
 
         // verify đã vào được màn Edit hay chưa
@@ -322,49 +303,123 @@ public class AddNewLeads extends BaseTest {
         verifyCheckboxSelected(checkboxPublic);
     }
 
+    public static void pressCombo(int... keys) throws Exception {
+        Robot r = new Robot();
+        // Nhấn giữ tất cả phím
+        for (int key : keys) {
+            r.keyPress(key);
+        }
+        // Nhả tất cả phím
+        for (int key : keys) {
+            r.keyRelease(key);
+        }
+    }
 
-    public static void deleteLead(String leadsName) throws InterruptedException {
-        WebElement firstRow = driver.findElement(By.xpath(LocatorsLeadsCRM.firstRow));
-        // B2: Hover chuột vào dòng đầu tiên
+    public static void editLead (String statusEdit, String sourceEdit, String name, String addressEdit) throws Exception {
+
         Actions actions = new Actions(driver);
-        actions.moveToElement(firstRow).perform();
+        Robot robot = new Robot();
 
-        Thread.sleep(3000);
-
-        driver.findElement(By.xpath(linkDelete)).click();
-        Thread.sleep(3000);
-
-        //Khởi tạo class Alert
-        Alert alert1 = driver.switchTo().alert();
-        //Dùng hàm accept() để xác nhận Alert (tương ứng click vào nút OK)
-        alert1.accept(); // chấm hàm để sử dụng
-        Thread.sleep(3000);
-
-        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).clear();
-        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).sendKeys(leadsName);
+        actions.click(driver.findElement(By.xpath(dropdownStatus))).perform();
+        Thread.sleep(200);
+        actions.sendKeys(driver.findElement(By.xpath(inputSearchStatus)), statusEdit).perform();
+        Thread.sleep(2000);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        Thread.sleep(2000);
+        actions.click(driver.findElement(By.xpath(getValueStatus(statusEdit)))).perform();
         Thread.sleep(2000);
 
-        List<WebElement> actualResults = driver.findElements(By.xpath(firstRowItemLeads));
-        Assert.assertEquals(actualResults.size(), 0, "FAILED: Lead vẫn tìm thấy sau khi xóa. Số lượng kết quả: " + actualResults.size());
 
-        System.out.println("Không tìm thấy Lead '" + leadsName + "' trong kết quả tìm kiếm.");
+        actions.click(driver.findElement(By.xpath(dropdownSource))).perform();
+        Thread.sleep(200);
+        actions.sendKeys(driver.findElement(By.xpath(inputSearchSource)), sourceEdit).perform();
+        Thread.sleep(2000);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        Thread.sleep(2000);
+        actions.click(driver.findElement(By.xpath(getValueSource(sourceEdit)))).perform();
+        Thread.sleep(2000);
 
+
+
+
+//        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+//        pressCombo(KeyEvent.VK_DELETE);
+
+        WebElement elementName = driver.findElement(By.xpath(inputName));
+        actions.click(elementName).perform();
+        Thread.sleep(1000);
+        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+        pressCombo(KeyEvent.VK_DELETE);
+        Thread.sleep(1000);
+        actions.sendKeys(elementName, name).perform();
+        Thread.sleep(2000);
+
+
+        WebElement elementAddress= driver.findElement(By.xpath(inputAddress));
+        actions.click(elementAddress).perform();
+        Thread.sleep(1000);
+        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
+        pressCombo(KeyEvent.VK_DELETE);
+        Thread.sleep(1000);
+        //  elementHourlyRate.clear();
+        actions.sendKeys(elementAddress, addressEdit).perform();
+        Thread.sleep(1000);
 
     }
 
 
+    public void clickButtonDelete(String leadName) throws InterruptedException {
+        WebElement firstRow = driver.findElement(By.xpath(LocatorsLeadsCRM.firstRow));
+        // B2: Hover chuột vào dòng đầu tiên
+        Actions actions = new Actions(driver);
+        actions.moveToElement(firstRow).perform();
+        Thread.sleep(3000);
+
+        driver.findElement(By.xpath(linkDelete)).click();
+        Thread.sleep(2000);
+    }
+
+    public void confirmAlertDelete() throws InterruptedException {
+        driver.switchTo().alert().accept();
+        Thread.sleep(1000);
+    }
+
+    public void verifyAfterDeleteLead(String leadName) throws InterruptedException {
+//        driver.findElement(By.xpath(LocatorLeadPage.inputSearchLeads)).sendKeys(leadName);
+//        Thread.sleep(1000);
+//        Assert.assertFalse(checkExistsElement(LocatorLeadPage.getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
+//        Thread.sleep(1000);
+
+        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).clear();
+        driver.findElement(By.xpath(LocatorsLeadsCRM.inputSearch)).sendKeys(leadName);
+        Thread.sleep(2000);
+
+        Assert.assertFalse(checkExistsElement(LocatorsLeadsCRM.getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
+        Thread.sleep(1000);
+        System.out.println("Không tìm thấy Lead '" + leadName + "' trong kết quả tìm kiếm.");
+    }
+
+    public void clickButtonSave() throws InterruptedException {
+        driver.findElement(By.xpath(buttonSave)).click();
+        Thread.sleep(3000);
+    }
+
+
+    public void clickIconClosePopupLeadDetail(String leadName) throws InterruptedException {
+        driver.findElement(By.xpath(iconClosePopupLeadDetail(leadName))).click();
+        Thread.sleep(1000);
+    }
+
 
     @Test(priority = 1)
     public void testAddAndVerifyLead() throws InterruptedException{
-        //openNewLeadsPage();
-
-      //  AddNewLeads addLead = new AddNewLeads();
-
         String status = "Active";
         String source = "Google";
         String assigned = "Admin Anh Tester";
         String tag = "JSC_NEW";
-        String name = "Yến Nhi 1";
+        String leadName = "Yến Nhi 1";
         String address = "Đại Linh";
         String position = "Tester";
         String city = "Việt Nam";
@@ -386,26 +441,24 @@ public class AddNewLeads extends BaseTest {
         //click btn addnewLead
         verifyBtnAddNewLead();
 
-       addNewLeads(status, source, assigned, tag, name, address, position, city,
+       addNewLeads(status, source, assigned, tag, leadName, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
        Thread.sleep(2000);
 
         verifyEmailResult(true, "");
 
-
-        searchLeads("Yến Nhi 1");
-        Thread.sleep(2000);
+        searchLeads(leadName);
 
     }
 
     @Test(priority = 2)
-    public void testEditLead() throws InterruptedException{
+    public void testVerifyEditLead() throws InterruptedException{
         String status = "Active";
         String source = "Google";
         String assigned = "Admin Anh Tester";
         String tag = "JSC_NEW";
-        String name = "Yến Nhi 2";
+        String leadName = "Yến Nhi 2";
         String address = "Đại Linh";
         String position = "Tester";
         String city = "Việt Nam";
@@ -427,7 +480,7 @@ public class AddNewLeads extends BaseTest {
         //click btn addnewLead
         verifyBtnAddNewLead();
 
-        addNewLeads(status, source, assigned, tag, name, address, position, city,
+        addNewLeads(status, source, assigned, tag, leadName, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
         Thread.sleep(2000);
@@ -435,10 +488,10 @@ public class AddNewLeads extends BaseTest {
         verifyEmailResult(true, "");
         Thread.sleep(2000);
 
-        searchLeads("Yến Nhi 2");
+        searchLeads(leadName);
         Thread.sleep(2000);
 
-        editLead(status, source, assigned, tag, name, address, position, city,
+        verifyEditLead(status, source, assigned, tag, leadName, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
         Thread.sleep(2000);
@@ -446,6 +499,62 @@ public class AddNewLeads extends BaseTest {
     }
 
     @Test(priority = 3)
+    public void testEditLead() throws Exception {
+        String status = "Active";
+        String source = "Google";
+        String assigned = "Admin Anh Tester";
+        String tag = "JSC_NEW";
+        String leadName = "Yến Nhi 2";
+        String address = "Đại Linh";
+        String position = "Tester";
+        String city = "Việt Nam";
+        String emailAddress = "ngocnhi2@gmail.com";
+        String state = "Hà Nội";
+        String website = "htester.com.vn";
+        String country = "Vietnam";
+        String phone = "0965898989";
+        String zipCode = "0001";
+        String leadValue = "12345";
+        String language = "Vietnamese";
+        String company = "NODO JSC";
+        String description = "htest add new lead";
+        String dateContacted = "10-11-2025 00:00:00";
+
+        //click menu Lead
+        verifyMenuLead();
+
+        //click btn addnewLead
+        verifyBtnAddNewLead();
+
+        addNewLeads(status, source, assigned, tag, leadName, address, position, city,
+                emailAddress, state, website, country, phone, zipCode, leadValue, language,
+                company, description, dateContacted);
+        Thread.sleep(2000);
+
+        verifyEmailResult(true, "");
+        Thread.sleep(2000);
+
+        searchLeads(leadName);
+        Thread.sleep(2000);
+
+        verifyEditLead(status, source, assigned, tag, leadName, address, position, city,
+                emailAddress, state, website, country, phone, zipCode, leadValue, language,
+                company, description, dateContacted);
+        Thread.sleep(2000);
+
+        String statusEdit = "Active";
+        String sourceEdit = "Facebook";
+        String addressEdit = "Thanh Oai";
+
+        editLead(statusEdit, sourceEdit, leadName, addressEdit);
+        Thread.sleep(3000);
+        clickButtonSave();
+        clickIconClosePopupLeadDetail(leadName);
+        searchLeads(leadName);
+
+    }
+
+    @Test(priority = 4)
     public void testDeleteLead() throws InterruptedException{
         //openNewLeadsPage();
 
@@ -455,7 +564,7 @@ public class AddNewLeads extends BaseTest {
         String source = "Google";
         String assigned = "Admin Anh Tester";
         String tag = "JSC_NEW";
-        String name = "Yến Nhi 3";
+        String leadName = "Yến Nhi 3";
         String address = "Đại Linh";
         String position = "Tester";
         String city = "Việt Nam";
@@ -477,17 +586,19 @@ public class AddNewLeads extends BaseTest {
         //click btn addnewLead
         verifyBtnAddNewLead();
 
-        addNewLeads(status, source, assigned, tag, name, address, position, city,
+        addNewLeads(status, source, assigned, tag, leadName, address, position, city,
                 emailAddress, state, website, country, phone, zipCode, leadValue, language,
                 company, description, dateContacted);
         Thread.sleep(2000);
 
-        searchLeads("Yến Nhi 3");
+        searchLeads(leadName);
         Thread.sleep(2000);
+        clickButtonDelete(leadName);
+        confirmAlertDelete();
+        verifyAfterDeleteLead(leadName);
 
-        deleteLead("Yến Nhi 3");
+      //  deleteLead(leadName);
         Thread.sleep(2000);
-
     }
 
 

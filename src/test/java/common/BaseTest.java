@@ -17,6 +17,17 @@ public class BaseTest {
     public static WebDriver driver;
     public static SoftAssert softAssert;
 
+    public boolean checkExistsElement(String xpathElement) {
+        List<WebElement> element = driver.findElements(By.xpath(xpathElement));
+        if (element.size() > 0) {
+            System.out.println("Phần tử tồn tại: true" + xpathElement);
+            return true;
+        } else {
+            System.out.println("Phần tử không tồn tại: false" + xpathElement);
+            return false;
+        }
+    }
+
     @BeforeMethod
     public static void createDriver() throws InterruptedException {
         driver = new ChromeDriver();
