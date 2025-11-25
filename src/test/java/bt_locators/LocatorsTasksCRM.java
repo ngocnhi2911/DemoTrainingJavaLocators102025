@@ -133,9 +133,12 @@ public class LocatorsTasksCRM {
         String xpathTag  = "//input[@id='tags']/following-sibling::ul[@id='ui-id-2']//div[normalize-space()='" +valueTag+ "']";
         return xpathTag ;
     }
+    public static String iconCloseTag = "//a[@class='tagit-close' and normalize-space()='×']";
 
     public static String labelTaskDescription = "//div[@id='inputTagsWrapper']/following::p[text()='Task Description']";
-    public static String inputTaskDescription = "//iframe[@id='description_ifr']";
+    public static String inputDescription = "//textarea[@id='description']";
+    //public static String inputTaskDescription = "//iframe[@id='description_ifr']";
+    public static String iframeDescription = "//body[@id='tinymce']";
 
     public static String buttonClose= "//button[@type='submit' and text()='Save']/preceding-sibling::button";
 

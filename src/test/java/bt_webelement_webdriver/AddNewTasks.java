@@ -4,10 +4,7 @@ import bt_locators.LocatorsLeadsCRM;
 import bt_locators.LocatorsTasksCRM;
 import common.BaseTest;
 import login_crm.LoginCRM;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -289,7 +286,7 @@ public class AddNewTasks extends BaseTest {
 
 
     public static void editTasks (String subjectEdit, String hourlyRateEdit, String startDateEdit, String dueDateEdit, String priorityEdit, String repeatEveryEdit,
-                                  String relatedToEdit, String typeRelatedToEdit) throws Exception {
+                                  String relatedToEdit, String typeRelatedToEdit, String descriptionEdit) throws Exception {
 
         Actions actions = new Actions(driver);
         Robot robot = new Robot();
@@ -366,6 +363,10 @@ public class AddNewTasks extends BaseTest {
         actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValueRepeatEvery(repeatEveryEdit)))).perform();
         Thread.sleep(2000);
 
+        WebElement elementBtnSave = driver.findElement(By.xpath(LocatorsTasksCRM.buttonSave)); //trỏ tới element
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", elementBtnSave); //true là cuộn xuống dưới, false là cuộn lên trên
+
 
 //        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.dropdownRepeatTo))).perform();
 //        Thread.sleep(1000);
@@ -400,6 +401,30 @@ public class AddNewTasks extends BaseTest {
         robot.keyRelease(KeyEvent.VK_ENTER);
         Thread.sleep(2000);
         actions.click(driver.findElement(By.xpath(getValueForRepeatTo(typeRelatedToEdit)))).perform();
+        Thread.sleep(2000);
+
+//        Thread.sleep(1000);
+//        WebElement elementCloseTag = driver.findElement(By.xpath(LocatorsTasksCRM.iconCloseTag));
+//        actions.click(elementCloseTag).perform();
+//        Thread.sleep(1000);
+//        WebElement inputTag = driver.findElement(By.xpath(LocatorsTasksCRM.inputTag));
+//        actions.sendKeys(inputTag, tagEdit).perform();
+//        Thread.sleep(1000);
+//
+//        WebElement labelTag = driver.findElement(By.xpath(LocatorsTasksCRM.labelTag));
+//        actions.click(labelTag).perform();
+//        Thread.sleep(1000);
+//        actions.click(labelTag).perform();
+
+
+        //iframe
+        driver.findElement(By.xpath(LocatorsTasksCRM.inputDescription)).click();
+        Thread.sleep(2000);
+        driver.switchTo().frame("description_ifr");
+        WebElement iframeDescription = driver.findElement(By.xpath(LocatorsTasksCRM.iframeDescription));
+        iframeDescription.sendKeys(descriptionEdit);
+        Thread.sleep(2000);
+        driver.switchTo().parentFrame();
         Thread.sleep(2000);
 
 
@@ -475,8 +500,10 @@ public class AddNewTasks extends BaseTest {
         String repeatEveryEdit  = "2 Months";
         String relatedToEdit  = "Lead";
         String typeRelatedToEdit  = "Yến Nhi";
+        //String tagEdit = "JSC_NEW";
+        String descriptionEdit = "description iframe";
 
-        editTasks(subjectEdit, hourlyRateEdit, startDateEdit, dueDateEdit , priorityEdit , repeatEveryEdit , relatedToEdit , typeRelatedToEdit);
+        editTasks(subjectEdit, hourlyRateEdit, startDateEdit, dueDateEdit , priorityEdit , repeatEveryEdit , relatedToEdit , typeRelatedToEdit, descriptionEdit);
 
         Thread.sleep(4000);
         clickButtonSave();
