@@ -1,9 +1,7 @@
-package bt_webelement_webdriver;
+package thuc_hanh;
 
-import bt_locators.LocatorsLeadsCRM;
 import bt_locators.LocatorsTasksCRM;
 import common.BaseTest;
-import login_crm.LoginCRM;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -11,38 +9,28 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 // import static bt_locators.LocatorsLeadsCRM.*;
-import static bt_locators.LocatorsLeadsCRM.*;
-import static bt_locators.LocatorsLeadsCRM.buttonNewLead;
-import static bt_locators.LocatorsLeadsCRM.headerAddNewLead;
 import static bt_locators.LocatorsTasksCRM.*;
-import static login_crm.LoginCRM.*;
 // import static bt_webelement_webdriver.AddNewLeads.addNewLeads;
 
 
-public class AddNewTasks extends BaseTest {
+public class BTTasks extends BaseTest {
+    String taskName = "";
+    String hourlyRate = "";
+    String startDate = "";
+    String dueDate = "";
+    String priority = "";
+    String repeatEvery = "";
+    String totalCycles = "";
+    String relatedTo = "";
+    String typeRelatedTo = "";
+    String assignee = "";
+    String follower = "";
+    String tag = "";
+    String description = "";
 
-
-
-//    public static void verifyMenuTasks() throws InterruptedException {
-//        //click menu Lead
-//        driver.findElement(By.xpath(menuTasks)).click();
-//        Thread.sleep(2000);
-//        verifyDisplay(headerTasksPage, "Đã tới trang Tasks", "FAILED!!! Không truy cập được vào trang Tasks");
-//
-//    }
-//
-//    public static void verifyBtnAddNewTasks() throws InterruptedException {
-//        //click button New Lead
-//        driver.findElement(By.xpath(buttonNewTasks)).click();
-//        Thread.sleep(1000);
-//        verifyDisplay(headerAddNewTask, "Mở pop-up Add new task thành công", "FAILED!!! Không mở được pop-up Add new task");
-//
-//    }
 
     public void verifyMenuTask() throws InterruptedException {
         //click menu Lead
@@ -149,6 +137,10 @@ public class AddNewTasks extends BaseTest {
         inpTotalCycles.clear();
         action.sendKeys(inpTotalCycles, totalCycles).perform();
 
+        WebElement elementBtnSave = driver.findElement(By.xpath(LocatorsTasksCRM.buttonSave)); //trỏ tới element
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", elementBtnSave);
+
 
         action.click(driver.findElement(By.xpath(LocatorsTasksCRM.dropdownRepeatTo))).perform();
         Thread.sleep(1000);
@@ -169,21 +161,50 @@ public class AddNewTasks extends BaseTest {
 
 
 
+//        action.click(driver.findElement(By.xpath(LocatorsTasksCRM.dropdownAssignees))).perform();
+//        Thread.sleep(1000);
+//        action.sendKeys(driver.findElement(By.xpath(LocatorsTasksCRM.inputSearchAssignees)), "Admin Anh Tester").perform();
+//        String xpathAssignees = getValueAssignees(assignee);
+//        Thread.sleep(2000);
+//        action.click(driver.findElement(By.xpath(xpathAssignees))).perform();
+//        Thread.sleep(2000);
+
+        // Assignees
         action.click(driver.findElement(By.xpath(LocatorsTasksCRM.dropdownAssignees))).perform();
         Thread.sleep(1000);
-        action.sendKeys(driver.findElement(By.xpath(LocatorsTasksCRM.inputSearchAssignees)), "Admin Anh Tester").perform();
-        String xpathAssignees = getValueAssignees(assignee);
+        List<WebElement> selectedAssignees = driver.findElements(By.xpath(listSelectedDropdownAssignees));
+        for (WebElement cb : selectedAssignees) {
+            cb.click();
+            Thread.sleep(1000);
+        }
+        action.click(driver.findElement(By.xpath(labelAssignees))).perform();
         Thread.sleep(2000);
-        action.click(driver.findElement(By.xpath(xpathAssignees))).perform();
+
+        action.click(driver.findElement(By.xpath(LocatorsTasksCRM.dropdownAssignees))).perform();
+        Thread.sleep(1000);
+        action.sendKeys(driver.findElement(By.xpath(LocatorsTasksCRM.inputSearchAssignees)), assignee).perform();
+        Thread.sleep(2000);
+        action.click(driver.findElement(By.xpath(getValueAssignees(assignee)))).perform();
+        Thread.sleep(2000);
+
+
+        // Followers
+        action.click(driver.findElement(By.xpath(dropdownFollowers))).perform();
+        Thread.sleep(1000);
+        List<WebElement> selectedFollowers = driver.findElements(By.xpath(listSelectedDropdownFollowers));
+        for (WebElement cb : selectedFollowers) {
+            cb.click();
+            Thread.sleep(1000);
+        }
+        action.click(driver.findElement(By.xpath(labelFollowers))).perform();
         Thread.sleep(2000);
 
 
         action.click(driver.findElement(By.xpath(LocatorsTasksCRM.dropdownFollowers))).perform();
         Thread.sleep(1000);
-        action.sendKeys(driver.findElement(By.xpath(LocatorsTasksCRM.inputSearchFollowers)), "Admin Example").perform();
-        String xpathFollowers = getValueFollowers(follower);
+        action.sendKeys(driver.findElement(By.xpath(LocatorsTasksCRM.inputSearchFollowers)), follower).perform();
         Thread.sleep(1000);
-        action.click(driver.findElement(By.xpath(xpathFollowers))).perform();
+        action.click(driver.findElement(By.xpath(getValueFollowers(follower)))).perform();
         Thread.sleep(2000);
 
 
@@ -272,21 +293,9 @@ public class AddNewTasks extends BaseTest {
 
     }
 
-    public static void pressCombo(int... keys) throws Exception {
-        Robot r = new Robot();
-        // Nhấn giữ tất cả phím
-        for (int key : keys) {
-            r.keyPress(key);
-        }
-        // Nhả tất cả phím
-        for (int key : keys) {
-            r.keyRelease(key);
-        }
-    }
 
-
-    public static void editTasks (String subjectEdit, String hourlyRateEdit, String startDateEdit, String dueDateEdit, String priorityEdit, String repeatEveryEdit,
-                                  String relatedToEdit, String typeRelatedToEdit, String descriptionEdit) throws Exception {
+    public static void editTasks (String subject, String hourlyRate, String startDate, String dueDate, String priority, String repeatEvery,
+                                  String relatedTo, String typeRelatedTo, String tag, String description) throws Exception {
 
         Actions actions = new Actions(driver);
         Robot robot = new Robot();
@@ -314,39 +323,35 @@ public class AddNewTasks extends BaseTest {
         WebElement elementSubject = driver.findElement(By.xpath(inputSubject));
         actions.click(elementSubject).perform();
         Thread.sleep(1000);
-        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
-        pressCombo(KeyEvent.VK_DELETE);
+        actions.keyDown(Keys.CONTROL) .sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).build().perform();
         Thread.sleep(1000);
-        actions.sendKeys(elementSubject, subjectEdit).perform();
+        actions.sendKeys(elementSubject, subject).perform();
         Thread.sleep(2000);
 
 
         WebElement elementHourlyRate = driver.findElement(By.xpath(inputHourlyRate));
         actions.click(elementHourlyRate).perform();
         Thread.sleep(1000);
-        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
-        pressCombo(KeyEvent.VK_DELETE);
+        actions.keyDown(Keys.CONTROL) .sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).build().perform();
         Thread.sleep(1000);
       //  elementHourlyRate.clear();
-        actions.sendKeys(elementHourlyRate, hourlyRateEdit).perform();
+        actions.sendKeys(elementHourlyRate, hourlyRate).perform();
         Thread.sleep(1000);
 
         WebElement elementStartDate = driver.findElement(By.xpath(inputStartDate));
         actions.click(elementStartDate).perform();
         Thread.sleep(2000);
-        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
-        pressCombo(KeyEvent.VK_DELETE);
+        actions.keyDown(Keys.CONTROL) .sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).build().perform();
         Thread.sleep(2000);
-        actions.sendKeys(elementStartDate, startDateEdit).perform();
+        actions.sendKeys(elementStartDate, startDate).perform();
         Thread.sleep(2000);
 
         WebElement elementDueDate= driver.findElement(By.xpath(inputDueDate));
         actions.click(elementDueDate).perform();
         Thread.sleep(1000);
-        pressCombo(KeyEvent.VK_CONTROL, KeyEvent.VK_A);
-        pressCombo(KeyEvent.VK_DELETE);
+        actions.keyDown(Keys.CONTROL) .sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).build().perform();
         Thread.sleep(1000);
-        actions.sendKeys(elementDueDate, dueDateEdit).perform();
+        actions.sendKeys(elementDueDate, dueDate).perform();
         Thread.sleep(1000);
 
 
@@ -354,13 +359,13 @@ public class AddNewTasks extends BaseTest {
         //Priority
         actions.click(driver.findElement(By.xpath(dropdownPrioryty))).perform();
         Thread.sleep(1000);
-        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValuePrioryty(priorityEdit)))).perform();
+        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValuePrioryty(priority)))).perform();
         Thread.sleep(1000);
 
         //Repeat every
         actions.click(driver.findElement(By.xpath(dropdownRepeatEvery))).perform();
         Thread.sleep(2000);
-        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValueRepeatEvery(repeatEveryEdit)))).perform();
+        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValueRepeatEvery(repeatEvery)))).perform();
         Thread.sleep(2000);
 
         WebElement elementBtnSave = driver.findElement(By.xpath(LocatorsTasksCRM.buttonSave)); //trỏ tới element
@@ -389,32 +394,32 @@ public class AddNewTasks extends BaseTest {
         //Related To
         actions.click(driver.findElement(By.xpath(dropdownRepeatTo))).perform();
         Thread.sleep(2000);
-        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValueRepeatTo(relatedToEdit)))).perform();
+        actions.click(driver.findElement(By.xpath(LocatorsTasksCRM.getValueRepeatTo(relatedTo)))).perform();
         Thread.sleep(2000);
 
 
         actions.click(driver.findElement(By.xpath(dropdownValueForRepeatTo))).perform();
         Thread.sleep(200);
-        actions.sendKeys(driver.findElement(By.xpath(inputSearchValueForRepeatTo)), typeRelatedToEdit).perform();
+        actions.sendKeys(driver.findElement(By.xpath(inputSearchValueForRepeatTo)), typeRelatedTo).perform();
         Thread.sleep(2000);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
         Thread.sleep(2000);
-        actions.click(driver.findElement(By.xpath(getValueForRepeatTo(typeRelatedToEdit)))).perform();
+        actions.click(driver.findElement(By.xpath(getValueForRepeatTo(typeRelatedTo)))).perform();
         Thread.sleep(2000);
 
-//        Thread.sleep(1000);
-//        WebElement elementCloseTag = driver.findElement(By.xpath(LocatorsTasksCRM.iconCloseTag));
-//        actions.click(elementCloseTag).perform();
-//        Thread.sleep(1000);
-//        WebElement inputTag = driver.findElement(By.xpath(LocatorsTasksCRM.inputTag));
-//        actions.sendKeys(inputTag, tagEdit).perform();
-//        Thread.sleep(1000);
-//
-//        WebElement labelTag = driver.findElement(By.xpath(LocatorsTasksCRM.labelTag));
-//        actions.click(labelTag).perform();
-//        Thread.sleep(1000);
-//        actions.click(labelTag).perform();
+        Thread.sleep(1000);
+        WebElement elementCloseTag = driver.findElement(By.xpath(LocatorsTasksCRM.iconCloseTag));
+        actions.click(elementCloseTag).perform();
+        Thread.sleep(1000);
+        WebElement inputTag = driver.findElement(By.xpath(LocatorsTasksCRM.inputTag));
+        actions.sendKeys(inputTag, tag).perform();
+        Thread.sleep(1000);
+
+        WebElement labelTag = driver.findElement(By.xpath(LocatorsTasksCRM.labelTag));
+        actions.click(labelTag).perform();
+        Thread.sleep(1000);
+        actions.click(labelTag).perform();
 
 
         //iframe
@@ -422,91 +427,85 @@ public class AddNewTasks extends BaseTest {
         Thread.sleep(2000);
         driver.switchTo().frame("description_ifr");
         WebElement iframeDescription = driver.findElement(By.xpath(LocatorsTasksCRM.iframeDescription));
-        iframeDescription.sendKeys(descriptionEdit);
+        iframeDescription.sendKeys(description);
         Thread.sleep(2000);
         driver.switchTo().parentFrame();
         Thread.sleep(2000);
 
-
    }
-
 
     public void clickButtonSave() throws InterruptedException {
         driver.findElement(By.xpath(LocatorsTasksCRM.buttonSave)).click();
         Thread.sleep(2000);
     }
 
-
-
-
-
-
-
     @Test(priority = 1)
     public void testAddAndVerifyTask() throws InterruptedException{
-        String subject = "Yến Nhi Task 1";
-        String hourlyRate = "10";
-        String startDate = "14-12-2025";
-        String dueDate = "18-12-2025";
-        String priority = "High";
-        String repeatEvery = "1 Month";
-        String totalCycles = "56622";
-        String relatedTo = "Customer";
-        String typeRelatedTo = "An test 02";
-        String assignee = "Admin Anh Tester";
-        String follower = "Admin Example";
-        String tag = "JSC_NEW";
+
+        BTTasks btTasks = new BTTasks();
+
+        btTasks.taskName = "Yến Nhi Task 2";
+        btTasks.hourlyRate = "10";
+        btTasks.startDate = "14-12-2025";
+        btTasks.dueDate = "18-12-2025";
+        btTasks.priority = "High";
+        btTasks.repeatEvery = "1 Month";
+        btTasks.totalCycles = "56622";
+        btTasks.relatedTo = "Customer";
+        btTasks.typeRelatedTo = "An test 02";
+        btTasks.assignee = "Admin Anh Tester";
+        btTasks.follower = "Admin Example";
+        btTasks.tag = "JSC_NEW";
 
         verifyMenuTask();
         verifyBtnAddNewTask();
-
-        addNewTasks(subject, hourlyRate, startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
-
+        addNewTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
     }
 
     @Test(priority = 1)
     public void testEditask() throws Exception {
-        String subject = "Yến Nhi Task 2";
-        String hourlyRate = "10";
-        String startDate = "14-12-2025";
-        String dueDate = "18-12-2025";
-        String priority = "High";
-        String repeatEvery = "1 Month";
-        String totalCycles = "56622";
-        String relatedTo = "Customer";
-        String typeRelatedTo = "An test 02";
-        String assignee = "Admin Anh Tester";
-        String follower = "Admin Example";
-        String tag = "JSC_NEW";
+
+        BTTasks btTasks = new BTTasks();
+
+        btTasks.taskName = "Yến Nhi Task 2";
+        btTasks.hourlyRate = "10";
+        btTasks.startDate = "14-12-2025";
+        btTasks.dueDate = "18-12-2025";
+        btTasks.priority = "High";
+        btTasks.repeatEvery = "1 Month";
+        btTasks.totalCycles = "56622";
+        btTasks.relatedTo = "Customer";
+        btTasks.typeRelatedTo = "An test 02";
+        btTasks.assignee = "Admin Anh Tester";
+        btTasks.follower = "Admin Example";
+        btTasks.tag = "JSC_NEW";
 
         verifyMenuTask();
         verifyBtnAddNewTask();
+        addNewTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
 
-        addNewTasks(subject, hourlyRate, startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+        searchTasks(btTasks.taskName);
         Thread.sleep(2000);
 
-        searchTasks("Yến Nhi Task 2");
-        Thread.sleep(2000);
-
-        verifyEditTask(subject, hourlyRate + ".00", startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+        verifyEditTask( btTasks.taskName, btTasks.hourlyRate + ".00", btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
         Thread.sleep(2000);
 
 
-        String subjectEdit = "Yến Nhi Task 2";
-        String hourlyRateEdit  = "20";
-        String startDateEdit  = "20-12-2025";
-        String dueDateEdit  = "25-12-2025";
-        String priorityEdit  = "High";
-        String repeatEveryEdit  = "2 Months";
-        String relatedToEdit  = "Lead";
-        String typeRelatedToEdit  = "Yến Nhi";
-        //String tagEdit = "JSC_NEW";
-        String descriptionEdit = "description iframe";
+        btTasks.taskName = "Yến Nhi Task 2";
+        btTasks.hourlyRate  = "20";
+        btTasks.startDate  = "20-12-2025";
+        btTasks.dueDate  = "25-12-2025";
+        btTasks.priority  = "High";
+        btTasks.repeatEvery  = "2 Months";
+        btTasks.relatedTo  = "Lead";
+        btTasks.typeRelatedTo  = "Yến Nhi";
+        btTasks.tag = "HTest";
+        btTasks.description = "description iframe";
 
-        editTasks(subjectEdit, hourlyRateEdit, startDateEdit, dueDateEdit , priorityEdit , repeatEveryEdit , relatedToEdit , typeRelatedToEdit, descriptionEdit);
+        editTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate ,  btTasks.priority , btTasks.repeatEvery , btTasks.relatedTo , btTasks.typeRelatedTo, btTasks.tag,  btTasks.description);
 
-        Thread.sleep(4000);
+        Thread.sleep(2000);
         clickButtonSave();
-        Thread.sleep(4000);
+        Thread.sleep(2000);
     }
 }

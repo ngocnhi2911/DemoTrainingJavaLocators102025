@@ -108,8 +108,10 @@ public class LocatorsTasksCRM {
         return xpathValueForRepeatTo;
     }
 
+
     public static String labelAssignees = "//label[@for='assignees']";
     public static String dropdownAssignees = "//button[@data-id='assignees']";
+    public static String listSelectedDropdownAssignees = "//select[@id='assignees']/following-sibling::div//ul//li[@class='selected']";
     public static String inputSearchAssignees = "//button[@data-id='assignees']/following-sibling::div//input[@type='search']";
     public static String getValueAssignees(String valueAssignees) {
         String xpathAssignees = "//button[@data-id='assignees']/following-sibling::div//span[normalize-space()='" +valueAssignees+ "']";
@@ -119,6 +121,7 @@ public class LocatorsTasksCRM {
 
     public static String labelFollowers = "//label[@for='followers[]']";
     public static String dropdownFollowers= "//button[@data-id='followers[]']";
+    public static String listSelectedDropdownFollowers = "//select[@id='followers[]']/following-sibling::div//ul//li[@class='selected']";
     public static String inputSearchFollowers = "//button[@data-id='followers[]']/following-sibling::div//input[@type='search']";
     public static String getValueFollowers(String valueFollowers) {
         String xpathFollowers = "//button[@data-id='followers[]']/following-sibling::div//span[normalize-space()='" +valueFollowers+ "']";

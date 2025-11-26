@@ -1,37 +1,19 @@
-package bt_webelement_webdriver;
+package thuc_hanh;
 
 import bt_locators.LocatorsLeadsCRM;
-import bt_locators.LocatorsTasksCRM;
 import common.BaseTest;
-import login_crm.LoginCRM;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Random;
 
 import static bt_locators.LocatorsLeadsCRM.*;
-import static bt_locators.LocatorsLeadsCRM.getValueCountry;
-import static bt_locators.LocatorsTasksCRM.checkboxBillable;
-import static bt_locators.LocatorsTasksCRM.dropdownPrioryty;
-import static bt_locators.LocatorsTasksCRM.dropdownRepeatEvery;
-import static bt_locators.LocatorsTasksCRM.dropdownRepeatTo;
-import static bt_locators.LocatorsTasksCRM.dropdownValueForRepeatTo;
-import static bt_locators.LocatorsTasksCRM.getValueForRepeatTo;
-import static bt_locators.LocatorsTasksCRM.inputDueDate;
-import static bt_locators.LocatorsTasksCRM.inputHourlyRate;
-import static bt_locators.LocatorsTasksCRM.inputSearchValueForRepeatTo;
-import static bt_locators.LocatorsTasksCRM.inputStartDate;
-import static bt_locators.LocatorsTasksCRM.inputSubject;
 
-public class AddNewLeads extends BaseTest {
+public class BTLeads extends BaseTest {
 
     public void verifyMenuLead() throws InterruptedException {
         //click menu Lead
