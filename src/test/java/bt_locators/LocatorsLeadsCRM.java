@@ -1,218 +1,214 @@
 package bt_locators;
 
+import org.openqa.selenium.By;
+
 public class LocatorsLeadsCRM {
-    public static String url = "https://crm.anhtester.com/admin/authentication";
-
-    //Locators for Login Page
-    public static String headerLoginPage = "//h1[normalize-space() = 'Login']";
-    public static String inputEmail = "//input[@id='email']";
-    public static String inputPassword = "//input[@id='password']";
-    public static String buttonLogin = "//button[normalize-space()='Login']";
-    public static String checkboxRememberMe = "//input[@id='remember']";
-    public static String labelRememberMe = "//label[@for='remember']";
-    public static String linkForgotPassword = "//a[normalize-space()='Forgot Password?']";
-
-       //** Nếu có id --> Nên dùng id, (xác định thằng cha rồi đến thằng con) để check lỗi mình mong muốn có đúng k
-    public static String errorMessageInvalidEmailOrPassword = "//div[@id='alerts']/div";
-
-    public static String alertErrorMessage = "//div[contains(text(), 'Invalid email')]";
-    public static String alertErrorMessageEmailRequired = "//div[text()='The Email Address field is required.']";
-    public static String alertErrorMessagePasswordRequired = "//div[text()='The Password field is required.']";
 
     //Locators for menu Leads
-    public static String menuLeads = "//span[@class='menu-text' and normalize-space()='Leads']";
-    public static String menuDashboard = "//span[@class='menu-text' and normalize-space()='Dashboard']";
+    public static By menuLeads = By.xpath("//span[@class='menu-text' and normalize-space()='Leads']");
+    public static By menuDashboard = By.xpath("//span[@class='menu-text' and normalize-space()='Dashboard']");
 
     //Locators for Leads Page
 
-    public static String urlLeads = "https://crm.anhtester.com/admin/leads";
-    public static String buttonNewLead = "//a[normalize-space()='New Lead']";
-    public static String iconLeadsSummary = "//a[@data-title='Leads Summary']";
-    public static String iconSwitchToKanban = "//a[@data-title='Switch to Kanban']";
-    public static String iconFilterBy = "//div[@id='vueApp']//button[@type='button']";
-    public static String headerLeadPage = "//h4[normalize-space()='Leads Summary']";
+    public static By urlLeads = By.xpath("https://crm.anhtester.com/admin/leads");
+    public static By buttonNewLead = By.xpath("//a[normalize-space()='New Lead']");
+    public static By iconLeadsSummary = By.xpath("//a[@data-title='Leads Summary']");
+    public static By iconSwitchToKanban = By.xpath("//a[@data-title='Switch to Kanban']");
+    public static By iconFilterBy = By.xpath("//div[@id='vueApp']//button[@type='button']");
+    public static By headerLeadPage = By.xpath("//h4[normalize-space()='Leads Summary']");
 
-    public static String dropdownLength = "//select[@name='leads_length']";
-    public static String buttonExport = "//button[normalize-space()='Export']";
-    public static String buttonBulkActions = "//button[normalize-space()='Bulk Actions']";
-    public static String iconReload = "//button[@title='Reload']";
+    public static By dropdownLength = By.xpath("//select[@name='leads_length']");
+    public static By buttonExport = By.xpath("//button[normalize-space()='Export']");
+    public static By buttonBulkActions = By.xpath("//button[normalize-space()='Bulk Actions']");
+    public static By iconReload = By.xpath("//button[@title='Reload']");
 
-    public static String inputSearch = "//div[@id='leads_filter']//input[@type='search']";
+    public static By inputSearch = By.xpath("//div[@id='leads_filter']//input[@type='search']");
     // Tìm kiếm phần tử đầu tiên của bảng
-    public static String firstRowItemLeads = "//table[@id='leads']//tbody/tr[1]/td[3]/a";
-    public static String iconCloseProfile = "//div[@id='lead-modal']//button[@class='close']";
+    public static By firstRowItemLeads = By.xpath("//table[@id='leads']//tbody/tr[1]/td[3]/a");
+    public static By iconCloseProfile = By.xpath("//div[@id='lead-modal']//button[@class='close']");
 
-    public static String firstRow = "//table[@id='leads']//tbody/tr[1]/td[3]";
+    public static By firstRow = By.xpath("//table[@id='leads']//tbody/tr[1]/td[3]");
 
     //----------Locators for Leads button
 
     // dùng hàm, vì giá trị có thể thay đổi, dùng hàm để truyền giá trị vào
-    public static String linkView = "//tr[@id='lead_248']//a[normalize-space()='View']";
-  //  public static String linkEdit = "//table[@id='leads']//tbody/tr[1]/td[3]/a/following-sibling::div/a[normalize-space()='Edit']";
-    public static String linkEdit = "//table[@id='leads']/tbody/tr[1]//a[normalize-space()='Edit']";
-    public static String linkDelete = "//table[@id='leads']/tbody/tr[1]//a[normalize-space()='Delete']";
+    public static By linkView = By.xpath("//tr[@id='lead_248']//a[normalize-space()='View']");
+  //  public static By linkEdit = By.xpath("//table[@id='leads']//tbody/tr[1]/td[3]/a/following-sibling::div/a[normalize-space()='Edit']");
+    public static By linkEdit = By.xpath("//table[@id='leads']/tbody/tr[1]//a[normalize-space()='Edit']");
+    public static By linkDelete = By.xpath("//table[@id='leads']/tbody/tr[1]//a[normalize-space()='Delete']");
 
-    public static String buttonPrevious = "//li[@id='leads_previous']/a[text()='Previous']";
-    public static String buttonNumber = "//div[@id='leads_paginate']//li[@class='paginate_button active']/a";
-    public static String buttonNext = "//li[@id='leads_next']/a[text()='Next']";
+    public static By buttonPrevious = By.xpath("//li[@id='leads_previous']/a[text()='Previous']");
+    public static By buttonNumber = By.xpath("//div[@id='leads_paginate']//li[@class='paginate_button active']/a");
+    public static By buttonNext = By.xpath("//li[@id='leads_next']/a[text()='Next']");
 
     //----------Locators for Leads table
 
-    public static String inputCheck = "//input[@id='mass_select_all']";
-    public static String headerSTT = "//th[@id='th-number']";
-    public static String headerName = "//th[@id='th-name']";
-    public static String headerCompany = "//th[@id='th-company']";
-    public static String headerEmail = "//th[@id='th-email']";
-    public static String headerPhone = "//th[@id='th-phone']";
-    public static String headerValue= "//th[@id='th-lead-value']";
-    public static String headerTags = "//th[@id='th-tags']";
-    public static String headerAssigned= "//th[@id='th-assigned']";
-    public static String headerStatus = "//th[@id='th-status']";
-    public static String headerSource = "//th[@id='th-source']";
-    public static String headerLastContact= "//th[@id='th-last-contact']";
-    public static String headerCreated = "//th[@id='th-date-created']";
+    public static By inputCheck = By.xpath("//input[@id='mass_select_all']");
+    public static By headerSTT = By.xpath("//th[@id='th-number']");
+    public static By headerName = By.xpath("//th[@id='th-name']");
+    public static By headerCompany = By.xpath("//th[@id='th-company']");
+    public static By headerEmail = By.xpath("//th[@id='th-email']");
+    public static By headerPhone = By.xpath("//th[@id='th-phone']");
+    public static By headerValue= By.xpath("//th[@id='th-lead-value']");
+    public static By headerTags = By.xpath("//th[@id='th-tags']");
+    public static By headerAssigned= By.xpath("//th[@id='th-assigned']");
+    public static By headerStatus = By.xpath("//th[@id='th-status']");
+    public static By headerSource = By.xpath("//th[@id='th-source']");
+    public static By headerLastContact= By.xpath("//th[@id='th-last-contact']");
+    public static By headerCreated = By.xpath("//th[@id='th-date-created']");
 
 
     // Locators for Add New Leads Page
 
-    public static String headerAddNewLead = "//h4[normalize-space()='Add new lead']";
+    public static By headerAddNewLead = By.xpath("//h4[normalize-space()='Add new lead']");
 
-    public static String getFirstRowItemLeadName(String leadName) {
-        String xpath = "//table[@id='leads']//a[normalize-space()='" + leadName + "']";
+    public static By getFirstRowItemLeadName(String leadName) {
+        By xpath = By.xpath("//table[@id='leads']//a[normalize-space()='" + leadName + "']");
         return xpath;
     }
-    public static String iconClosePopupLeadDetail(String headerLeadDetail) {
-        String xpath = "//h4[contains(normalize-space(),'" + headerLeadDetail + "')]/preceding-sibling::button[@aria-label='Close']";
-        return xpath;
-    }
+//    public static By iconClosePopupLeadDetail(String headerLeadDetail) {
+//        By xpath = By.xpath("//h4[contains(normalize-space(),'" + headerLeadDetail + "')]/preceding-sibling::button[@aria-label='Close']");
+//        return xpath;
+//    }
 
 
     //bỏ
-    public static String labelStatus = "//label[@for='status']";
-    public static String dropdownStatus = "//button[@data-id='status']";
-    public static String inputSearchStatus = "//button[@data-id='status']/following-sibling::div//input[@type='search']";
-  //  public static String dropdownListStatus = "//div[@app-field-wrapper='status']//span[normalize-space()='Active']";
-    public static String iconAddNewStatus = "//div[@app-field-wrapper='status']//div[@class='input-group-btn']";
-    public static String getValueStatus(String valueStatus) {
-        String xpathStatus = "//div[@app-field-wrapper='status']//span[normalize-space()='" + valueStatus +"']";
+    public static By labelStatus = By.xpath("//label[@for='status']");
+    public static By dropdownStatus = By.xpath("//button[@data-id='status']");
+    public static By inputSearchStatus = By.xpath("//button[@data-id='status']/following-sibling::div//input[@type='search']");
+  //  public static By dropdownListStatus = By.xpath("//div[@app-field-wrapper='status']//span[normalize-space()='Active']");
+    public static By iconAddNewStatus = By.xpath("//div[@app-field-wrapper='status']//div[@class='input-group-btn']");
+    public static By getValueStatus(String valueStatus) {
+        By xpathStatus = By.xpath("//div[@app-field-wrapper='status']//span[normalize-space()='" + valueStatus +"']");
         return xpathStatus;
     }
 
 
-    public static String labelSource = "//label[text()='Source']";
-    public static String dropdownSource = "//button[@data-id='source']";
-    public static String inputSearchSource = "//button[@data-id='source']/following-sibling::div//input[@type='search']";
+    public static By labelSource = By.xpath("//label[text()='Source']");
+    public static By dropdownSource = By.xpath("//button[@data-id='source']");
+    public static By inputSearchSource = By.xpath("//button[@data-id='source']/following-sibling::div//input[@type='search']");
 
     // dùng hàm, vì giá trị có thể thay đổi, dùng hàm để truyền giá trị vào
-   // public static String dropdownListSource = "//div[@app-field-wrapper='source']//span[text()='Google']";
-    public static String iconAddNewSource = "//div[@app-field-wrapper='source']//div[@class='input-group-btn']";
-    public static String getValueSource(String valueSource) {
-        String xpathSource = "//div[@app-field-wrapper='source']//span[text()='" + valueSource + "']";
+   // public static By dropdownListSource = By.xpath("//div[@app-field-wrapper='source']//span[text()='Google']");
+    public static By iconAddNewSource = By.xpath("//div[@app-field-wrapper='source']//div[@class='input-group-btn']");
+    public static By getValueSource(String valueSource) {
+        By xpathSource = By.xpath("//div[@app-field-wrapper='source']//span[text()='" + valueSource + "']");
         return xpathSource;
     }
 
 
-    public static String labelAssigned = "//label[@for='assigned']";
-    public static String dropdownAssigned = "//button[@data-id='assigned']";
-    public static String inputSearchAssigned = "//button[@data-id='assigned']/following-sibling::div//input[@type='search']";
-   // public static String dropdownListAssigned = "//div[@app-field-wrapper='assigned']//span[normalize-space()='Admin Anh Tester']";
-    public static String getValueAssigned(String valueAssigned) {
-        String xpathAssigned= "//div[@app-field-wrapper='assigned']//span[normalize-space()='"+valueAssigned+"']";
+    public static By labelAssigned = By.xpath("//label[@for='assigned']");
+    public static By dropdownAssigned = By.xpath("//button[@data-id='assigned']");
+    public static By inputSearchAssigned = By.xpath("//button[@data-id='assigned']/following-sibling::div//input[@type='search']");
+   // public static By dropdownListAssigned = By.xpath("//div[@app-field-wrapper='assigned']//span[normalize-space()='Admin Anh Tester']");
+    public static By getValueAssigned(String valueAssigned) {
+        By xpathAssigned= By.xpath("//div[@app-field-wrapper='assigned']//span[normalize-space()='"+valueAssigned+"']");
         return xpathAssigned;
     }
 
-    public static String iconTag = "//div[@id='inputTagsWrapper']//i[@class='fa fa-tag']";
-    public static String labelTag = "//label[@for='tags']";
-    //public static String inputTag = "//div[@id='inputTagsWrapper']//input[@placeholder='Tag']";
-    public static String inputTag = "//label[@for='tags']/following-sibling::ul//input[@placeholder='Tag']";
-    public static String listdropdownTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']/li[@class='ui-menu-item']/div";
-    public static String getValueTag(String valueTag) {
-        String xpathTag = "//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div[text()='" + valueTag + "']";
+    public static By iconTag = By.xpath("//div[@id='inputTagsWrapper']//i[@class='fa fa-tag']");
+    public static By labelTag = By.xpath("//label[@for='tags']");
+    //public static By inputTag = By.xpath("//div[@id='inputTagsWrapper']//input[@placeholder='Tag']");
+    public static By inputTag = By.xpath("//label[@for='tags']/following-sibling::ul//input[@placeholder='Tag']");
+    public static By listdropdownTag = By.xpath("//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']/li[@class='ui-menu-item']/div");
+    public static By getValueTag(String valueTag) {
+        By xpathTag = By.xpath("//div[@id='inputTagsWrapper']//ul[@id='ui-id-2']//div[text()='" + valueTag + "']");
         return xpathTag;
     }
-   // public static String inputEditTag = "//div[@id='inputTagsWrapper']/input[@id='tags']";
-    public static String inputEditTag = "//input[@id='tags']";
-    public static String iconCloseTag = "//a[@class='tagit-close' and normalize-space()='×']";
+   // public static By inputEditTag = By.xpath("//div[@id='inputTagsWrapper']/input[@id='tags']");
+   public static By inputEditTag = By.xpath("//input[@id='tags']");
+  //   public static By inputEditTag = By.xpath("//input[@id='tags']/following-sibling::ul//span[@class='tagit-label']");
+  // public static By inputEditTag = By.xpath("(//input[@id='tags']/following-sibling::ul)/descendant::span[@class='tagit-label']");
+    public static By iconCloseTag = By.xpath("//a[@class='tagit-close' and normalize-space()='×']");
 
 
-    public static String labelName = "//form[@id='lead_form']//div[@app-field-wrapper='name']/label[@for='name']";
-    public static String inputName = "//form[@id='lead_form']//input[@id='name']";
+    public static By labelName = By.xpath("//form[@id='lead_form']//div[@app-field-wrapper='name']/label[@for='name']");
+    public static By inputName = By.xpath("//form[@id='lead_form']//input[@id='name']");
 
-    public static String labelAddress = "//div[@app-field-wrapper='address']//label[@for='address']";
-    public static String inputAddress = "//div[@app-field-wrapper='address']//textarea[@id='address']";
+    public static By labelAddress = By.xpath("//div[@app-field-wrapper='address']//label[@for='address']");
+    public static By inputAddress = By.xpath("//div[@app-field-wrapper='address']//textarea[@id='address']");
 
-    public static String labelPosition = "//form[@id='lead_form']//label[text()='Position']";
-    public static String inputPosition = "//form[@id='lead_form']//input[@id='title']";
+    public static By labelPosition = By.xpath("//form[@id='lead_form']//label[text()='Position']");
+    public static By inputPosition = By.xpath("//form[@id='lead_form']//input[@id='title']");
 
-    public static String labelCity = "//div[@app-field-wrapper='city']//label[@for='city']";
-    public static String inputCity = "//div[@app-field-wrapper='city']//input[@id='city']";
+    public static By labelCity = By.xpath("//div[@app-field-wrapper='city']//label[@for='city']");
+    public static By inputCity = By.xpath("//div[@app-field-wrapper='city']//input[@id='city']");
 
-    public static String labelEmailAddress = "//form[@id='lead_form']//label[@for='email']";
-    public static String inputEmailAddress = "//form[@id='lead_form']//input[@id='email']";
+    public static By labelEmailAddress = By.xpath("//form[@id='lead_form']//label[@for='email']");
+    public static By inputEmailAddress = By.xpath("//form[@id='lead_form']//input[@id='email']");
 
-    public static String labelState = "//div[@app-field-wrapper='state']//label[@for='state']";
-    public static String inputState = "//div[@app-field-wrapper='state']//input[@id='state']";
+    public static By labelState = By.xpath("//div[@app-field-wrapper='state']//label[@for='state']");
+    public static By inputState = By.xpath("//div[@app-field-wrapper='state']//input[@id='state']");
 
-    public static String labelWebsite = "//form[@id='lead_form']//label[@for='website']";
-    public static String inputWebsite = "//form[@id='lead_form']//input[@id='website']";
+    public static By labelWebsite = By.xpath("//form[@id='lead_form']//label[@for='website']");
+    public static By inputWebsite = By.xpath("//form[@id='lead_form']//input[@id='website']");
 
-    public static String labelCountry = "//div[@app-field-wrapper='country']//label[@for='country']";
-    public static String dropdownCountry = "//button[@data-id='country']";
-    public static String inputSearchCountry = "//button[@data-id='country']/following-sibling::div//input[@type='search']";
-   // public static String dropdownListCountry = "//div[@app-field-wrapper='country']//span[text()='Vietnam']";
-    public static String getValueCountry(String valueCountry) {
-        String xpathCountry = "//div[@app-field-wrapper='country']//span[text()='" + valueCountry + "']";
+    public static By labelCountry = By.xpath("//div[@app-field-wrapper='country']//label[@for='country']");
+    public static By dropdownCountry = By.xpath("//button[@data-id='country']");
+    public static By inputSearchCountry = By.xpath("//button[@data-id='country']/following-sibling::div//input[@type='search']");
+   // public static By dropdownListCountry = By.xpath("//div[@app-field-wrapper='country']//span[text()='Vietnam']");
+    public static By getValueCountry(String valueCountry) {
+        By xpathCountry = By.xpath("//div[@app-field-wrapper='country']//span[text()='" + valueCountry + "']");
         return xpathCountry;
     }
 
-    public static String labelPhone = "//div[@app-field-wrapper='phonenumber']//label[@for='phonenumber']";
-    public static String inputPhone = "//div[@app-field-wrapper='phonenumber']//input[@id='phonenumber']";
+    public static By labelPhone = By.xpath("//div[@app-field-wrapper='phonenumber']//label[@for='phonenumber']");
+    public static By inputPhone = By.xpath("//div[@app-field-wrapper='phonenumber']//input[@id='phonenumber']");
 
-    public static String labelZipCode = "//div[@app-field-wrapper='zip']/label[@for='zip']";
-    public static String inputZipCode = "//div[@app-field-wrapper='zip']//input[@id='zip']";
+    public static By labelZipCode = By.xpath("//div[@app-field-wrapper='zip']/label[@for='zip']");
+    public static By inputZipCode = By.xpath("//div[@app-field-wrapper='zip']//input[@id='zip']");
 
-    public static String labelLeadValue = "//label[@for='lead_value']";
-    public static String inputLeadValue = "//div[@data-toggle='tooltip']//input[@name='lead_value']";
-    public static String iconLeadValue = "/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[7]/div[6]/div/div";
+    public static By labelLeadValue = By.xpath("//label[@for='lead_value']");
+    public static By inputLeadValue = By.xpath("//div[@data-toggle='tooltip']//input[@name='lead_value']");
+    public static By iconLeadValue = By.xpath("/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[7]/div[6]/div/div");
 
-    public static String labelDefaultLanguage = "//label[@for='default_language']";
-    public static String dropdownDefaultLanguage = "//button[@data-id='default_language']";
-    public static String inputSearchDefaultLanguage = "//button[@data-id='default_language']/following-sibling::div//input[@type='search']";
-    public static String dropdownListDefaultLanguage = "//div[@id='bs-select-9']//span[normalize-space()='Vietnamese']";
-    public static String getValueDefaultLanguage(String valueDefaultLanguage) {
-        String xpathDefaultLanguage = "//div[@id='bs-select-9']//span[normalize-space()='"+valueDefaultLanguage+"']";
+    public static By labelDefaultLanguage = By.xpath("//label[@for='default_language']");
+    public static By dropdownDefaultLanguage = By.xpath("//button[@data-id='default_language']");
+    public static By inputSearchDefaultLanguage = By.xpath("//button[@data-id='default_language']/following-sibling::div//input[@type='search']");
+    public static By dropdownListDefaultLanguage = By.xpath("//div[@id='bs-select-9']//span[normalize-space()='Vietnamese']");
+    public static By getValueDefaultLanguage(String valueDefaultLanguage) {
+        By xpathDefaultLanguage = By.xpath("//button[@data-id='default_language']/following-sibling::div//span[contains(normalize-space(),'" + valueDefaultLanguage + "')]");
         return xpathDefaultLanguage;
     }
 
-    public static String labelCompany = "//div[@app-field-wrapper='company']//label[@for='company']";
-    public static String inputCompany= "//div[@app-field-wrapper='company']//input[@id='company']";
+    public static By labelCompany = By.xpath("//div[@app-field-wrapper='company']//label[@for='company']");
+    public static By inputCompany= By.xpath("//div[@app-field-wrapper='company']//input[@id='company']");
 
-    public static String labelDescription = "//label[@for='description']";
-    public static String inputDescription = "//div[@app-field-wrapper='description']//textarea[@id='description']";
+    public static By labelDescription = By.xpath("//label[@for='description']");
+    public static By inputDescription = By.xpath("//div[@app-field-wrapper='description']//textarea[@id='description']");
 
-    public static String labelDateContacted = "//label[@for='custom_contact_date']";
-    public static String inputDateContacted = "//input[@id='custom_contact_date']";
-    public static String iconDateContacted = "/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[9]/div[2]/div/div[1]/div/div/div";
+    public static By labelDateContacted = By.xpath("//label[@for='custom_contact_date']");
+    public static By inputDateContacted = By.xpath("//input[@id='custom_contact_date']");
+    public static By iconDateContacted = By.xpath("/html/body/div[11]/div/div/div[2]/div/div/div[2]/div/div/form/div[1]/div[3]/div[9]/div[2]/div/div[1]/div/div/div");
 
-    public static String inputLastContacted = "//label[@for='lastcontact']/following-sibling::div/input[@id='lastcontact']";
+    public static By inputLastContacted = By.xpath("//label[@for='lastcontact']/following-sibling::div/input[@id='lastcontact']");
 
-    public static String labelPublic = "//label[@for='lead_public']";
-    public static String checkboxPublic = "//input[@id='lead_public']";
+    public static By labelCheckboxPublic = By.xpath("//label[@for='lead_public']");
+    public static By checkboxPublic = By.xpath("//input[@id='lead_public']");
 
-    public static String labelContactedToday = "//label[@for='contacted_today']";
-    public static String checkboxContactedToday= "//input[@id='contacted_today']";
+    public static By labelCheckboxContactedToday = By.xpath("//label[@for='contacted_today']");
+    public static By checkboxContactedToday= By.xpath("//input[@id='contacted_today']");
 
-    public static String buttonClose= "//form[@id='lead_form']/div[2]/button[normalize-space()='Close']";
+    public static By buttonClose= By.xpath("//form[@id='lead_form']/div[2]/button[normalize-space()='Close']");
 
-    public static String buttonSave = "//form[@id='lead_form']/div[2]/button[@id='lead-form-submit']";
+    public static By buttonSave = By.xpath("//button[normalize-space()='Save' and @id='lead-form-submit']");
 
-    public static String alertErrorMessageRequired = "//p[starts-with(text(), 'This field is required.')]";
-    public static String alertErrorMessageLeadValue = "//p[@id='lead_value-error' and text() = 'Please enter a valid number.']";
-    public static String alertErrorMessageEmail = "//div[@app-field-wrapper='email']//p[@id='email-error']";
+    public static By alertErrorMessageRequired = By.xpath("//p[starts-with(text(), 'This field is required.')]");
+    public static By alertErrorMessageLeadValue = By.xpath("//p[@id='lead_value-error' and text() = 'Please enter a valid number.']");
+    public static By alertErrorMessageEmail = By.xpath("//div[@app-field-wrapper='email']//p[@id='email-error']");
 
-    public static String headerEditPage = "//div[@id='lead-modal']//h4[@class='modal-title']";
-    public static String tabProfile = "//ul[@role='tablist']/li[@class='active']";
+    public static By headerEditPage = By.xpath("//div[@id='lead-modal']//h4[@class='modal-title']");
+    public static By tabProfile = By.xpath("//ul[@role='tablist']/li[@class='active']");
 
+
+    public static By addLeadSuccessMessage = By.xpath("//span[@class='alert-title' and normalize-space()='Lead added successfully.']/parent::div");
+    public static By updateLeadSuccessMessage = By.xpath("//span[@class='alert-title' and normalize-space()='Lead updated successfully.']/parent::div");
+    public static By deleteLeadSuccessMessage = By.xpath("//span[@class='alert-title' and normalize-space()='Lead deleted']/parent::div");
+
+    public static By iconClosePopupLeadDetail(String headerLeadDetail) {
+        By xpath = By.xpath("//h4[contains(normalize-space(),'" + headerLeadDetail + "')]/preceding-sibling::button[@aria-label='Close']");
+        return xpath;
+    }
 
 
 }
