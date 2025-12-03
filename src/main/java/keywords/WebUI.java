@@ -1,6 +1,8 @@
 package keywords;
 
+import bt_locators.LocatorsTasksCRM;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -157,5 +159,25 @@ public class WebUI {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(driver, by));
     }
+
+    // Click bằng Actions
+    public static void actionClick(WebDriver driver, By locator) {
+        Actions act = new Actions(driver);
+        act.moveToElement(driver.findElement(locator)).click().perform();
+    }
+
+    // Move to element
+    public static void moveToElement(WebDriver driver, By locator) {
+        Actions act = new Actions(driver);
+        act.moveToElement(driver.findElement(locator)).perform();
+    }
+
+
+    public static void actionSendKeys(WebDriver driver, By locator, String text) {
+        Actions actions = new Actions(driver);
+        WebElement element = driver.findElement(locator);
+        actions.moveToElement(element).click().sendKeys(text).perform();
+    }
+
 
 }
