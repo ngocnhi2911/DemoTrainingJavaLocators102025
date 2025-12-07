@@ -1,6 +1,6 @@
 package pages;
 
-import bt_locators.LocatorsLeadsCRM;
+
 import common.BasePage;
 import keywords.WebUI;
 import org.openqa.selenium.By;

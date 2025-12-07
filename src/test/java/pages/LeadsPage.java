@@ -1,7 +1,7 @@
 
 package pages;
 
-import bt_locators.LocatorsLeadsCRM;
+
 import common.BasePage;
 import keywords.WebUI;
 import org.openqa.selenium.By;
@@ -13,47 +13,7 @@ import org.testng.Assert;
 
 import java.util.List;
 
-import static bt_locators.LocatorsLeadsCRM.*;
-import static bt_locators.LocatorsLeadsCRM.addLeadSuccessMessage;
-import static bt_locators.LocatorsLeadsCRM.alertErrorMessageEmail;
-import static bt_locators.LocatorsLeadsCRM.alertErrorMessageRequired;
-import static bt_locators.LocatorsLeadsCRM.buttonSave;
-import static bt_locators.LocatorsLeadsCRM.dropdownAssigned;
-import static bt_locators.LocatorsLeadsCRM.dropdownCountry;
-import static bt_locators.LocatorsLeadsCRM.dropdownDefaultLanguage;
-import static bt_locators.LocatorsLeadsCRM.dropdownSource;
-import static bt_locators.LocatorsLeadsCRM.dropdownStatus;
-import static bt_locators.LocatorsLeadsCRM.firstRow;
-import static bt_locators.LocatorsLeadsCRM.firstRowItemLeads;
-import static bt_locators.LocatorsLeadsCRM.iconCloseTag;
-import static bt_locators.LocatorsLeadsCRM.inputAddress;
-import static bt_locators.LocatorsLeadsCRM.inputCity;
-import static bt_locators.LocatorsLeadsCRM.inputCompany;
-import static bt_locators.LocatorsLeadsCRM.inputDateContacted;
-import static bt_locators.LocatorsLeadsCRM.inputDescription;
-import static bt_locators.LocatorsLeadsCRM.inputEmailAddress;
-import static bt_locators.LocatorsLeadsCRM.inputLastContacted;
-import static bt_locators.LocatorsLeadsCRM.inputLeadValue;
-import static bt_locators.LocatorsLeadsCRM.inputName;
-import static bt_locators.LocatorsLeadsCRM.inputPhone;
-import static bt_locators.LocatorsLeadsCRM.inputPosition;
-import static bt_locators.LocatorsLeadsCRM.inputSearch;
-import static bt_locators.LocatorsLeadsCRM.inputSearchAssigned;
-import static bt_locators.LocatorsLeadsCRM.inputSearchCountry;
-import static bt_locators.LocatorsLeadsCRM.inputSearchDefaultLanguage;
-import static bt_locators.LocatorsLeadsCRM.inputSearchSource;
-import static bt_locators.LocatorsLeadsCRM.inputSearchStatus;
-import static bt_locators.LocatorsLeadsCRM.inputState;
-import static bt_locators.LocatorsLeadsCRM.inputTag;
-import static bt_locators.LocatorsLeadsCRM.inputWebsite;
-import static bt_locators.LocatorsLeadsCRM.inputZipCode;
-import static bt_locators.LocatorsLeadsCRM.labelCheckboxContactedToday;
-import static bt_locators.LocatorsLeadsCRM.labelPhone;
-import static bt_locators.LocatorsLeadsCRM.labelTag;
-import static bt_locators.LocatorsLeadsCRM.linkDelete;
-import static bt_locators.LocatorsLeadsCRM.linkEdit;
-import static bt_locators.LocatorsLeadsCRM.tabProfile;
-import static bt_locators.LocatorsLeadsCRM.updateLeadSuccessMessage;
+
 
 public class LeadsPage extends BasePage{
 
@@ -250,8 +210,9 @@ public class LeadsPage extends BasePage{
 
     private By inputLastContacted = By.xpath("//label[@for='lastcontact']/following-sibling::div/input[@id='lastcontact']");
 
-    private By labelCheckboxprivate = By.xpath("//label[@for='lead_private']");
-    private By checkboxprivate = By.xpath("//input[@id='lead_private']");
+
+    private By labelCheckboxPublic = By.xpath("//label[@for='lead_public']");
+    private By checkboxPublic = By.xpath("//input[@id='lead_public']");
 
     private By labelCheckboxContactedToday = By.xpath("//label[@for='contacted_today']");
     private By checkboxContactedToday= By.xpath("//input[@id='contacted_today']");
@@ -363,16 +324,16 @@ public class LeadsPage extends BasePage{
 
         WebUI.clickElement(driver, dropdownStatus);
         WebUI.setTextElement(driver, inputSearchStatus, status);
-        WebUI.clickElement(driver, LocatorsLeadsCRM.getValueStatus(status));
+        WebUI.clickElement(driver, getValueStatus(status));
 
 
         WebUI.clickElement(driver, dropdownSource);
         WebUI.setTextElement(driver, inputSearchSource, source);
-        WebUI.clickElement(driver, LocatorsLeadsCRM.getValueSource(source));
+        WebUI.clickElement(driver, getValueSource(source));
 
         WebUI.clickElement(driver, dropdownAssigned);
         WebUI.setTextElement(driver, inputSearchAssigned, assigned);
-        WebUI.clickElement(driver, LocatorsLeadsCRM.getValueAssigned(assigned));
+        WebUI.clickElement(driver, getValueAssigned(assigned));
 
         if (flagEdit == 1) {
             WebUI.clickElement(driver, iconCloseTag);
@@ -417,7 +378,7 @@ public class LeadsPage extends BasePage{
 
         WebUI.clickElement(driver, dropdownCountry);
         WebUI.setTextElement(driver, inputSearchCountry, country);
-        WebUI.clickElement(driver, LocatorsLeadsCRM.getValueCountry(country));
+        WebUI.clickElement(driver, getValueCountry(country));
 
         WebUI.setTextElement(driver, inputPhone, phone);
         WebUI.setTextElement(driver, inputZipCode, zipCode);
@@ -425,12 +386,12 @@ public class LeadsPage extends BasePage{
 
         WebUI.clickElement(driver, dropdownDefaultLanguage);
         WebUI.setTextElement(driver, inputSearchDefaultLanguage, language);
-        WebUI.clickElement(driver, LocatorsLeadsCRM.getValueDefaultLanguage(language));
+        WebUI.clickElement(driver, getValueDefaultLanguage(language));
 
         WebUI.setTextElement(driver, inputCompany, company);
         WebUI.setTextElement(driver, inputDescription, description);
 
-        WebUI.clickElement(driver, labelCheckboxPublic);
+       WebUI.clickElement(driver, labelCheckboxPublic);
 
         if (flagEdit == 0) {
             WebUI.clickElement(driver, labelCheckboxContactedToday);
@@ -482,9 +443,9 @@ public class LeadsPage extends BasePage{
         } else {
             WebUI.waitForElementNotVisible(driver, updateLeadSuccessMessage);
         }
-        WebUI.scrollAtTop(driver, LocatorsLeadsCRM.iconClosePopupLeadDetail(name));
+        WebUI.scrollAtTop(driver, iconClosePopupLeadDetail(name));
 //        Thread.sleep(1000);
-        WebUI.clickElement(driver, LocatorsLeadsCRM.iconClosePopupLeadDetail(name));
+        WebUI.clickElement(driver, iconClosePopupLeadDetail(name));
         //   Thread.sleep(1000);
     }
 
@@ -524,10 +485,10 @@ public class LeadsPage extends BasePage{
             String description, String dateContacted
     ) throws InterruptedException {
         //  WebElement firstRow = driver.findElement(By.xpath(LocatorsLeadsCRM.firstRow));
-        WebElement firstRow = WebUI.getWebElement(driver, LocatorsLeadsCRM.firstRow);
+        WebElement firstRows = WebUI.getWebElement(driver, firstRow);
         // B2: Hover chuột vào dòng đầu tiên
         Actions actions = new Actions(driver);
-        actions.moveToElement(firstRow).perform();
+        actions.moveToElement(firstRows).perform();
         Thread.sleep(2000);
 
         //driver.findElement(By.xpath(linkEdit)).click();
@@ -591,7 +552,7 @@ public class LeadsPage extends BasePage{
 
         WebUI.clearTextElement(driver, inputSearch);
         WebUI.setTextElement(driver, inputSearch, leadName);
-        Assert.assertFalse(WebUI.checkExistsElement(driver, LocatorsLeadsCRM.getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
+        Assert.assertFalse(WebUI.checkExistsElement(driver, getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
 
         //Assert.assertFalse(checkExistsElement(LocatorsLeadsCRM.getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
         Thread.sleep(1000);

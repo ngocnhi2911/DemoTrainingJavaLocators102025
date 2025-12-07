@@ -1,6 +1,5 @@
 package pages;
 
-import bt_locators.LocatorsTasksCRM;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -12,8 +11,6 @@ import org.testng.Assert;
 import java.awt.*;
 import java.util.List;
 
-import static bt_locators.LocatorsTasksCRM.*;
-import static bt_locators.LocatorsTasksCRM.buttonSave;
 
 public class TasksPage {
     private WebDriver driver;
@@ -210,7 +207,7 @@ public class TasksPage {
             WebUI.actionClick(driver, checkboxBillable);
         }
 
-        WebUI.actionClick(driver, LocatorsTasksCRM.linkAttachFiles);
+        WebUI.actionClick(driver, linkAttachFiles);
         WebUI.actionSendKeys(driver, inputSubject, subject);
 
 
@@ -350,10 +347,10 @@ public class TasksPage {
                                       String totalCycles, String relatedTo,
                                       String typeRelatedTo, String assignee, String follower, String tag) throws InterruptedException {
 
-        WebElement firstRow = WebUI.getWebElement(driver, LocatorsTasksCRM.firstRow);
+        WebElement firstRows = WebUI.getWebElement(driver, firstRow);
         // B2: Hover chuột vào dòng đầu tiên
         Actions actions = new Actions(driver);
-        actions.moveToElement(firstRow).perform();
+        actions.moveToElement(firstRows).perform();
         Thread.sleep(3000);
 
 
@@ -425,12 +422,12 @@ public class TasksPage {
       //  Thread.sleep(1000);
 
         WebUI.actionClick(driver, dropdownPrioryty);
-        WebUI.actionClick(driver, LocatorsTasksCRM.getValuePrioryty(priority));
+        WebUI.actionClick(driver, getValuePrioryty(priority));
       //  Thread.sleep(1000);
 
 
         WebUI.actionClick(driver, dropdownRepeatEvery);
-        WebUI.actionClick(driver, LocatorsTasksCRM.getValueRepeatEvery(repeatEvery));
+        WebUI.actionClick(driver, getValueRepeatEvery(repeatEvery));
       //  Thread.sleep(1000);
 
 
@@ -439,7 +436,7 @@ public class TasksPage {
 
 
         WebUI.actionClick(driver, dropdownRepeatTo);
-        WebUI.actionClick(driver, LocatorsTasksCRM.getValueRepeatTo(relatedTo));
+        WebUI.actionClick(driver, getValueRepeatTo(relatedTo));
 
 
         WebUI.actionClick(driver, dropdownValueForRepeatTo);
@@ -451,10 +448,10 @@ public class TasksPage {
 
         //tag
         WebUI.actionClick(driver, iconCloseTag);
-        WebUI.actionSendKeys(driver, LocatorsTasksCRM.inputTag, tag);
-        WebUI.actionClick(driver, LocatorsTasksCRM.labelTag);
+        WebUI.actionSendKeys(driver, inputTag, tag);
+        WebUI.actionClick(driver, labelTag);
         Thread.sleep(1000);
-        WebUI.actionClick(driver, LocatorsTasksCRM.labelTag);
+        WebUI.actionClick(driver, labelTag);
 
 
         //iframe
@@ -462,8 +459,8 @@ public class TasksPage {
         Thread.sleep(2000);
         driver.switchTo().frame("description_ifr");
 
-        WebElement iframeDescription = WebUI.getWebElement(driver, LocatorsTasksCRM.iframeDescription);
-        iframeDescription.sendKeys(description);
+        WebElement iframeDescriptions = WebUI.getWebElement(driver, iframeDescription);
+        iframeDescriptions.sendKeys(description);
         Thread.sleep(2000);
         driver.switchTo().parentFrame();
         Thread.sleep(2000);

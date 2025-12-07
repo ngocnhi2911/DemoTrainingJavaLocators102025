@@ -1,6 +1,5 @@
 package pages;
 
-import bt_locators.LocatorsLeadsCRM;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -40,6 +39,7 @@ public class LoginPage {
     private By alertErrorMessageEmailRequired = By.xpath("//div[text()='The Email Address field is required.']");
     private By alertErrorMessagePasswordRequired = By.xpath("//div[text()='The Password field is required.']");
 
+    private By menuDashboard = By.xpath("//span[@class='menu-text' and normalize-space()='Dashboard']");
     // Khai báo các hàm xử lý trong nội bộ trang Login
     // 3 hàm enterEmail,enterPassword,clickButtonLogin nên khai báo là private --> chỉ sử dụng nó trong nội bộ class LoginPage
     //vì mk đã gọi lại trong hàm loginCRM, chứ k cần gọi lại 3 hàm này ở class khác
@@ -82,7 +82,7 @@ public class LoginPage {
     }
 
     public void verifyLoginSuccess() {
-        List<WebElement> checkMenuDashboard = WebUI.getWebElements(driver, LocatorsLeadsCRM.menuDashboard);
+        List<WebElement> checkMenuDashboard = WebUI.getWebElements(driver, menuDashboard);
         System.out.println("checkMenuDashboard: " + checkMenuDashboard.size());
         Assert.assertTrue(checkMenuDashboard.size() > 0, "Menu Dashboard is not displayed after login");
         System.out.println("Đăng nhập CRM thành công");

@@ -9,7 +9,6 @@ import pages.DashboardPage;
 import pages.LeadsPage;
 import pages.TasksPage;
 
-import static bt_locators.LocatorsLeadsCRM.*;
 
 public class BasePage {
     private WebDriver driver;

@@ -1,9 +1,9 @@
 package thuc_hanh;
 
-import bt_locators.LocatorsLeadsCRM;
+
 import common.BaseTest;
 import keywords.WebUI;
-import login_crm.LoginCRM;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
-
+/*
 import static bt_locators.LocatorsLeadsCRM.*;
 import static bt_locators.LocatorsLeadsCRM.alertErrorMessageEmail;
 import static bt_locators.LocatorsLeadsCRM.alertErrorMessageRequired;
@@ -57,8 +57,10 @@ import static bt_locators.LocatorsLeadsCRM.linkEdit;
 import static bt_locators.LocatorsLeadsCRM.tabProfile;
 
 
-public class TestBT extends BaseTest {
 
+ */
+public class TestBT extends BaseTest {
+/*
     String status;
     String source;
     String assigned;
@@ -595,5 +597,7 @@ public class TestBT extends BaseTest {
     }
 
 
+
+ */
 
 }

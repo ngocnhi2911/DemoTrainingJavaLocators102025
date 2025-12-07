@@ -1,7 +1,6 @@
 package common;
 
-import bt_locators.LocatorsLeadsCRM;
-import bt_locators.LocatorsLoginCRM;
+
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
