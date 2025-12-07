@@ -70,6 +70,13 @@ public class LeadsPage extends BasePage{
 
     //Locators for Leads Page
 
+    private By labelLeadTotalActive = By.xpath("(//span[normalize-space()='Active']/preceding-sibling::span)[1]");
+  //  private By labelLeadTotalActive = By.xpath("//div[@class='clearfix']/following-sibling::div//span[normalize-space()='Active']/preceding-sibling::span");
+
+
+  //  private By labelLeadTotalActive = By.xpath("//span[normalize-space()='Active']/preceding-sibling::span");
+    private By labelLeadTotalCustomer = By.xpath("//span[normalize-space()='Customer']/preceding-sibling::span");
+
     private By urlLeads = By.xpath("https://crm.anhtester.com/admin/leads");
     private By buttonNewLead = By.xpath("//a[normalize-space()='New Lead']");
     private By iconLeadsSummary = By.xpath("//a[@data-title='Leads Summary']");
@@ -271,17 +278,71 @@ public class LeadsPage extends BasePage{
     }
 
 
+    //Khai báo các hàm xử lý trong nội bộ trang Leader
+//    public String getTotalLeadTotalCustomer() {
+//        WebUI.getElementText(driver, labelLeadTotalCustomer);
+//        return driver.findElement(labelLeadTotalCustomer).getText();
+//    }
+//
+////    public String getTotalLeadTotalActive() {
+////        WebUI.getElementText(driver, labelLeadTotalActive);
+////        return driver.findElement(labelLeadTotalActive).getText();
+////    }
+//
+//    public String getTotalLeadTotalActive() {
+//      return  WebUI.getElementText(driver, labelLeadTotalActive);
+//    }
+    public String getTotalLeadTotalActive() {
+        WebUI.waitForElementVisible(driver, labelLeadTotalActive);
+        String totalStatusActive = WebUI.getElementText(driver, labelLeadTotalActive);
+        return totalStatusActive;
+    }
+
+    public String getTotalLeadTotalCustomer() {
+        WebUI.waitForElementVisible(driver, labelLeadTotalCustomer);
+        String totalStatusCustomer = WebUI.getElementText(driver, labelLeadTotalCustomer);
+        return totalStatusCustomer;
+    }
+
+
+    public int getTotalLeads() {
+        int totalLeads = Integer.parseInt(getTotalLeadTotalCustomer()) +
+                Integer.parseInt(getTotalLeadTotalActive());
+        return totalLeads;
+    }
+
+
+
+//    public int getTotalLeadTotalActive() {
+//        int totalLeadsActive = Integer.parseInt(getTotalLeadTotalActive());
+//        return totalLeadsActive;
+//    }
+
+
+
+
     //------------------------------------------------------------------------
 
     public void verifyMenuLead() throws InterruptedException {
 
         WebUI.clickElement(driver, menuLeads);
-        WebUI.clickElement(driver, iconLeadsSummary);
+
+       // WebUI.clickElement(driver, iconLeadsSummary);
         Thread.sleep(1000);
 
         Assert.assertTrue(WebUI.checkExistsElement(driver, headerLeadPage), "Không truy cập được vào trang Leads!");
         // So sánh text header lead có đúng với kết quả mk mong muốn hay k
         // softAssert.assertEquals(headerLeadPage, "Leads Summary", "Header Leads is not correct");
+    }
+
+    public void clickLeadsSummary() {
+        WebUI.clickElement(driver, iconLeadsSummary);
+        WebUI.sleep(2);
+    }
+
+    public void reloadPage(){
+        Actions action = new Actions(driver);
+        action.keyDown(Keys.CONTROL).sendKeys(Keys.F5).build().perform();
     }
 
     public void verifyBtnAddNewLead() throws InterruptedException {

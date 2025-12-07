@@ -1,11 +1,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="CRM Test" verbose="1">
-    <test name="TestLead">
+<suite name="MultiClass" verbose="1">
+    <test name="Run Multi Class">
         <classes>
             <class name="thuc_hanh.LeadsTest">
                 <methods>
                     <include name="testAddAndVerifyLead"/>
+                </methods>
+            </class>
+            <class name="thuc_hanh.TasksTest">
+                <methods>
+                    <include name="testAddAndVerifyTask"/>
                 </methods>
             </class>
         </classes>

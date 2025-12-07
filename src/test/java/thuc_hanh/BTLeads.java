@@ -108,7 +108,6 @@ public class BTLeads extends BaseTest {
 
         }
 
-
         WebUI.setTextAndKeyElement(driver, inputTag,tag, Keys.ENTER);
         Thread.sleep(500);
         WebUI.clickElement(driver, labelTag);
@@ -136,7 +135,6 @@ public class BTLeads extends BaseTest {
 
         WebUI.setTextElement(driver, inputCompany, company);
         WebUI.setTextElement(driver, inputDescription, description);
-
 
         WebUI.clickElement(driver, labelCheckboxPublic);
 

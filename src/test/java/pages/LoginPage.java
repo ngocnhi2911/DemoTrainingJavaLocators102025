@@ -67,12 +67,18 @@ public class LoginPage {
     }
 
     public DashboardPage loginCRM(){
+        // thay từ khóa "void" thành tên class tương ứng với tên trang mà mk chuyển hướng đến (DashboardPage)
         navigateToLoginPage();
         enterEmail("admin@example.com");
         enterPassword("123456");
         clickButtonLogin();
         verifyLoginSuccess();
-        return new DashboardPage(driver);
+
+        return new DashboardPage(driver); //kiểu dl trả về, ở bên trên khai báo kiểu dl nào thì phải return trả vfee kiểu dl đó
+        //Do bên trên khai báo 1 class --> nên phải trả về 1 class : new DashboardPage(driver)
+        //return new : khi login thành công, nó sẽ khởi tạo cái trang nó được liên kết tới
+        //khởi tạo: nghĩa là mang giá trị tiếp theo để có khả năng thao tác các hàm ở trong DashboardPage
+        // phải truyền "driver" vô do: cái class nào cx cần truyền driver, tương ứng với hàm xây dựng của nó
     }
 
     public void verifyLoginSuccess() {

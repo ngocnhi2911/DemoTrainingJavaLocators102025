@@ -14,10 +14,20 @@ public class DashboardPage extends BasePage {
         this.driver = driver;
     }
 
-    private static By buttonDashboardOption = By.xpath("//div[@class='screen-options-btn']");
+    private By buttonDashboardOption = By.xpath("//div[@class='screen-options-btn']");
+    private By labelTotalConvertedLeads = By.xpath("(//span[normalize-space()='Converted Leads']/parent::div)/following-sibling::span");
+
 
     public void verifyDashboardPageDisplayed(){
         boolean isElementDisplayed = WebUI.getWebElements(driver, buttonDashboardOption).size()>0;
         Assert.assertTrue(isElementDisplayed, "Dashboard Page is not displayed");
     }
+
+    public String getTotalConvertedLeads() {
+        String totalConvertedLeads = driver.findElement(labelTotalConvertedLeads).getText();
+        System.out.println("Total Projects In Progress: " + totalConvertedLeads);
+        return totalConvertedLeads;
+    }
+
+
 }

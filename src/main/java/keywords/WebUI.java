@@ -1,6 +1,5 @@
 package keywords;
 
-import bt_locators.LocatorsTasksCRM;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,6 +11,14 @@ import java.util.List;
 public class WebUI {
 
     private static int WAIT_TIMEOUT = 10;
+
+    public static void sleep(double second) {
+        try {
+            Thread.sleep((long) second * 1000);
+        } catch (InterruptedException ie) {
+            throw new RuntimeException(ie);
+        }
+    }
 
     public static void highlightElement(WebDriver driver, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -178,6 +185,5 @@ public class WebUI {
         WebElement element = driver.findElement(locator);
         actions.moveToElement(element).click().sendKeys(text).perform();
     }
-
 
 }
