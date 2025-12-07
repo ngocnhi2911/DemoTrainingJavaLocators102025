@@ -3,7 +3,7 @@
 <suite name="Suite" verbose="1">
     <test name="First Test">
         <classes>
-            <class name="thuc_hanh.BTLeads"></class>
+            <class name="thuc_hanh.LeadsTest"></class>
         </classes>
     </test>
 </suite>
