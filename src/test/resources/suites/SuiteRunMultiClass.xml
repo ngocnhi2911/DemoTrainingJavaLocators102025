@@ -3,12 +3,12 @@
 <suite name="MultiClass" verbose="1">
     <test name="Run Multi Class">
         <classes>
-            <class name="thuc_hanh.LeadsTest">
+            <class name="testcases.LeadsTest">
                 <methods>
                     <include name="testAddAndVerifyLead"/>
                 </methods>
             </class>
-            <class name="thuc_hanh.TasksTest">
+            <class name="testcases.TasksTest">
                 <methods>
                     <include name="testAddAndVerifyTask"/>
                 </methods>

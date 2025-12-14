@@ -1,4 +1,4 @@
-package thuc_hanh;
+package testcases;
 
 import common.BaseTest;
 import org.testng.Assert;
@@ -28,7 +28,7 @@ public class DashboardTest extends BaseTest {
         String totalConvertedLeadsOnDashboard = dashboardPage.getTotalConvertedLeads();
 
         leadsPage = dashboardPage.clickMenuLead(); //Chuyển sang trang Projects
-        leadsPage.clickLeadsSummary();
+        leadsPage.clickIconLeadsSummary();
 
         Assert.assertEquals(totalConvertedLeadsOnDashboard, leadsPage.getTotalLeadTotalCustomer() + " / " + leadsPage.getTotalLeads(),
                 "Total Leads on Dashboard does not match total Leads on Leads Page.");

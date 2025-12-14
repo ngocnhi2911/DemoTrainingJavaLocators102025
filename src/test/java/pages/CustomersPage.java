@@ -2,6 +2,7 @@ package pages;
 
 
 import common.BasePage;
+import keywords.Action_OLD;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,7 @@ public class CustomersPage extends BasePage {
     public CustomersPage(WebDriver driver){
         super(driver); // phải dùng super do khi kế thừa 1 class mà nó có tham số trong hàm xây dựng phải cần super
         this.driver = driver;
+        new WebUI(driver);  // Khởi tạo WebUI để truyền giá trị driver vào trong class WebUI
     }
 
     private By totalSearchW = By.xpath("//table[@id='clients']//tbody//td/a[contains(text(),'w')]");
@@ -24,14 +26,14 @@ public class CustomersPage extends BasePage {
     private By linkDelete = By.xpath("//table[@id='clients']/tbody/tr[1]//a[normalize-space()='Delete']");
     private By inputSearch = By.xpath("//div[@id='clients_filter']//input[@type='search']");
 
-    public void searchTotalW() throws InterruptedException {
+    public void searchTotalW(){
 
         while (true){
-            WebUI.clickElement(driver, inputSearch);
-            WebUI.setTextElement(driver, inputSearch, "w");
-            Thread.sleep(2000);
+            WebUI.clickElement(inputSearch);
+            WebUI.setTextElement(inputSearch, "w");
+            WebUI.sleep(2);
 
-            List<WebElement> searchTotaldata = WebUI.getWebElements(driver, totalSearchW);
+            List<WebElement> searchTotaldata = WebUI.getWebElements(totalSearchW);
          //   WebElement firstRow = WebUI.getWebElement(driver, firstRowCustomers);
             // B2: Hover chuột vào dòng đầu tiên
             // 3. Lấy dòng đầu tiên
@@ -39,39 +41,36 @@ public class CustomersPage extends BasePage {
 
             Actions actions = new Actions(driver);
             actions.moveToElement(firstRow).perform();
-            Thread.sleep(2000);
+            WebUI.sleep(2);
 
-            WebUI.clickElement(driver, linkDelete);
-            Thread.sleep(1000);
+            WebUI.clickElement(linkDelete);
+            WebUI.sleep(2);
             driver.switchTo().alert().accept();
-            Thread.sleep(1000);
-
-            //   cb.click();
-            Thread.sleep(1000);
+            WebUI.sleep(2);
         }
     }
 
 
     public void searchTotal(String customerName){
-        WebUI.clickElement(driver, inputSearch);
-        WebUI.setTextElement(driver, inputSearch, "w");
+        WebUI.clickElement(inputSearch);
+        WebUI.setTextElement(inputSearch, customerName);
     }
 
-    public void hoverTotal(String customerName) throws InterruptedException {
-        WebElement firstRow = WebUI.getWebElement(driver, firstRowCustomers);
+    public void hoverTotal(String customerName){
+        WebElement firstRow = WebUI.getWebElement(firstRowCustomers);
         // B2: Hover chuột vào dòng đầu tiên
         Actions actions = new Actions(driver);
         actions.moveToElement(firstRow).perform();
-        Thread.sleep(2000);
+        WebUI.sleep(2);
     }
 
     public void clickLinkDelete(String customerName){
-        WebUI.clickElement(driver, linkDelete);
+        WebUI.clickElement(linkDelete);
     }
 
-    public void clickAcceptAlert(String customerName) throws InterruptedException {
+    public void clickAcceptAlert(String customerName){
         driver.switchTo().alert().accept();
-        Thread.sleep(1000);
+        WebUI.sleep(2);
     }
 
 }

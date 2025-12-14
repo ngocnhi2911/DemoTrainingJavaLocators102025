@@ -1,4 +1,4 @@
-package thuc_hanh;
+package testcases;
 
 import common.BaseTest;
 import org.testng.annotations.Test;
@@ -8,18 +8,18 @@ import pages.LoginPage;
 import pages.TasksPage;
 
 public class TasksTest extends BaseTest {
-    String taskName;
-    String hourlyRate;
-    String startDate;
-    String dueDate;
-    String priority;
-    String repeatEvery;
-    String totalCycles;
-    String relatedTo;
-    String typeRelatedTo;
-    String assignee;
-    String follower;
-    String tag;
+    String taskName = "Yến Nhi Task 1";
+    String hourlyRate = "10";
+    String startDate = "14-12-2025";
+    String dueDate = "18-12-2025";
+    String priority = "High";
+    String repeatEvery = "1 Month";
+    String totalCycles = "56622";
+    String relatedTo = "Customer";
+    String typeRelatedTo = "Anh Tester 2811A2";
+    String assignee = "Admin Anh Tester";
+    String follower = "Admin Example";
+    String tag = "JSC_NEW";
     String description;
 
     private LoginPage loginPage;
@@ -29,7 +29,7 @@ public class TasksTest extends BaseTest {
 
 
     @Test(priority = 1)
-    public void testAddAndVerifyTask() throws InterruptedException{
+    public void testAddAndVerifyTask(){
         loginPage = new LoginPage(driver);
         dashboardPage = loginPage.loginCRM();
         tasksPage = dashboardPage.clickMenuTask();
@@ -38,21 +38,14 @@ public class TasksTest extends BaseTest {
 
         btTasks.taskName = "Yến Nhi Task 1";
 
-        btTasks.hourlyRate = "10";
-        btTasks.startDate = "14-12-2025";
-        btTasks.dueDate = "18-12-2025";
-        btTasks.priority = "High";
-        btTasks.repeatEvery = "1 Month";
-        btTasks.totalCycles = "56622";
-        btTasks.relatedTo = "Customer";
-        btTasks.typeRelatedTo = "An test 02";
-        btTasks.assignee = "Admin Anh Tester";
-        btTasks.follower = "Admin Example";
-        btTasks.tag = "JSC_NEW";
+        tasksPage.clickBtnAddNewTask();
+        tasksPage.addNewTasks(btTasks.taskName, hourlyRate, startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+        tasksPage.clickButtonSave();
+        tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 0);
+        tasksPage.searchTasks(btTasks.taskName);
 
-        tasksPage.verifyMenuTask();
-        tasksPage.verifyBtnAddNewTask();
-        tasksPage.addNewTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
+        tasksPage.verifyEditTask(btTasks.taskName, hourlyRate + ".00", startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+
     }
 
     @Test(priority = 2)
@@ -64,43 +57,33 @@ public class TasksTest extends BaseTest {
         TasksTest btTasks = new TasksTest();
 
         btTasks.taskName = "Yến Nhi Task 2";
-        btTasks.hourlyRate = "10";
-        btTasks.startDate = "14-12-2025";
-        btTasks.dueDate = "18-12-2025";
-        btTasks.priority = "High";
-        btTasks.repeatEvery = "1 Month";
-        btTasks.totalCycles = "56622";
-        btTasks.relatedTo = "Customer";
-        btTasks.typeRelatedTo = "An test 02";
-        btTasks.assignee = "Admin Anh Tester";
-        btTasks.follower = "Admin Example";
-        btTasks.tag = "JSC_NEW";
 
-        tasksPage.verifyMenuTask();
-        tasksPage.verifyBtnAddNewTask();
-        tasksPage.addNewTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
-//
-//        tasksPage.searchTasks(btTasks.taskName);
-//        tasksPage.verifyEditTask(btTasks.taskName, btTasks.hourlyRate + ".00", btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
-//
-//
-//
-//        btTasks.taskName = "Yến Nhi Task 2";
-//        btTasks.hourlyRate  = "20";
-//        btTasks.startDate  = "20-12-2025";
-//        btTasks.dueDate  = "25-12-2025";
-//        btTasks.priority  = "High";
-//        btTasks.repeatEvery  = "2 Months";
-//        btTasks.relatedTo  = "Lead";
-//        btTasks.typeRelatedTo  = "Yến Nhi";
-//        btTasks.tag = "HTest";
-//        btTasks.description = "description iframe";
-//
-//        tasksPage.editTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate ,  btTasks.priority , btTasks.repeatEvery , btTasks.relatedTo , btTasks.typeRelatedTo, btTasks.tag,  btTasks.description);
-//        tasksPage.clickButtonSave();
+        tasksPage.clickBtnAddNewTask();
+        tasksPage.addNewTasks(btTasks.taskName, hourlyRate, startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+        tasksPage.clickButtonSave();
+        tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 0);
+        tasksPage.searchTasks(btTasks.taskName);
+
+        tasksPage.verifyEditTask(btTasks.taskName, hourlyRate + ".00", startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+
+        btTasks.taskName = "Yến Nhi Task 2";
+        btTasks.hourlyRate  = "20";
+        btTasks.startDate  = "20-12-2025";
+        btTasks.dueDate  = "25-12-2025";
+        btTasks.priority  = "High";
+        btTasks.repeatEvery  = "2 Months";
+        btTasks.relatedTo  = "Lead";
+        btTasks.typeRelatedTo  = "Yến Nhi";
+        btTasks.tag = "HTest";
+        btTasks.description = "description iframe";
+
+        tasksPage.editTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate ,  btTasks.priority , btTasks.repeatEvery , btTasks.relatedTo , btTasks.typeRelatedTo, btTasks.tag,  btTasks.description);
+        tasksPage.clickButtonSave();
+        tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 1);
+        tasksPage.searchTasks(btTasks.taskName);
 
     }
-
+/*
     @Test(priority = 3)
     public void testAddLeadAndTask() throws InterruptedException{
         loginPage = new LoginPage(driver);
@@ -131,10 +114,9 @@ public class TasksTest extends BaseTest {
         testBT.flag = 1;
         testBT.flagEdit = 0;
 
-        //click menu Lead
-        leadsPage.verifyMenuLead();
-
         //click btn addnewLead
+        leadsPage.clickIconLeadsSummary();
+        leadsPage.verifyLeadSummaryDisplay();
         leadsPage.verifyBtnAddNewLead();
 
         leadsPage.fillDataLeads(testBT.status, testBT.source, testBT.assigned, testBT.tag, testBT.leadName, testBT.address, testBT.position, testBT.city,
@@ -164,12 +146,12 @@ public class TasksTest extends BaseTest {
         btTasks.follower = "Admin Example";
         btTasks.tag = "JSC_NEW";
 
-        tasksPage.verifyMenuTask();
-        tasksPage.verifyBtnAddNewTask();
+        tasksPage.clickBtnAddNewTask();
         tasksPage.addNewTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
+        tasksPage.clickButtonSave();
+        tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 0);
         tasksPage.searchTasks(btTasks.taskName);
-
     }
 
-
+ */
 }

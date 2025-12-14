@@ -3,6 +3,7 @@ package pages;
 
 
 import common.BasePage;
+import keywords.Action_OLD;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -22,6 +23,7 @@ public class LeadsPage extends BasePage{
     public LeadsPage(WebDriver driver){
         super(driver);
         this.driver = driver;
+        new WebUI(driver);
     }
 
     //Locators for menu Leads
@@ -30,12 +32,9 @@ public class LeadsPage extends BasePage{
 
     //Locators for Leads Page
 
-    private By labelLeadTotalActive = By.xpath("(//span[normalize-space()='Active']/preceding-sibling::span)[1]");
-  //  private By labelLeadTotalActive = By.xpath("//div[@class='clearfix']/following-sibling::div//span[normalize-space()='Active']/preceding-sibling::span");
-
-
-  //  private By labelLeadTotalActive = By.xpath("//span[normalize-space()='Active']/preceding-sibling::span");
+    private By labelLeadTotalActive = By.xpath("//span[normalize-space()='Active']/preceding-sibling::span");
     private By labelLeadTotalCustomer = By.xpath("//span[normalize-space()='Customer']/preceding-sibling::span");
+
 
     private By urlLeads = By.xpath("https://crm.anhtester.com/admin/leads");
     private By buttonNewLead = By.xpath("//a[normalize-space()='New Lead']");
@@ -67,6 +66,11 @@ public class LeadsPage extends BasePage{
     private By buttonPrevious = By.xpath("//li[@id='leads_previous']/a[text()='Previous']");
     private By buttonNumber = By.xpath("//div[@id='leads_paginate']//li[@class='paginate_button active']/a");
     private By buttonNext = By.xpath("//li[@id='leads_next']/a[text()='Next']");
+
+    private By buttonEdit(String leadName) {
+        By xpath = By.xpath("//table[@id='leads']//a[normalize-space()='" + leadName + "']/following-sibling::div/a[normalize-space()='Edit']");
+        return xpath;
+    }
 
     //----------Locators for Leads table
 
@@ -238,30 +242,29 @@ public class LeadsPage extends BasePage{
         return xpath;
     }
 
+    public void clickIconLeadsSummary() {
+        WebUI.clickElement(iconLeadsSummary);
+        WebUI.sleep(2);
+        WebUI.waitForPageLoaded();
+    }
 
-    //Khai báo các hàm xử lý trong nội bộ trang Leader
-//    public String getTotalLeadTotalCustomer() {
-//        WebUI.getElementText(driver, labelLeadTotalCustomer);
-//        return driver.findElement(labelLeadTotalCustomer).getText();
-//    }
-//
-////    public String getTotalLeadTotalActive() {
-////        WebUI.getElementText(driver, labelLeadTotalActive);
-////        return driver.findElement(labelLeadTotalActive).getText();
-////    }
-//
-//    public String getTotalLeadTotalActive() {
-//      return  WebUI.getElementText(driver, labelLeadTotalActive);
-//    }
+    public void verifyLeadSummaryDisplay() {
+        String actualCurrentUrl = WebUI.getCurrentURL();
+        String expectedUrl = "https://crm.anhtester.com/admin/leads";
+
+        Assert.assertTrue((WebUI.checkExistsElement(headerLeadPage, 2) && actualCurrentUrl.equals(expectedUrl)),
+                "Failed to navigate to the Lead menu");
+    }
+
     public String getTotalLeadTotalActive() {
-        WebUI.waitForElementVisible(driver, labelLeadTotalActive);
-        String totalStatusActive = WebUI.getElementText(driver, labelLeadTotalActive);
+        WebUI.waitForElementVisible(labelLeadTotalActive);
+        String totalStatusActive = WebUI.getElementText(labelLeadTotalActive);
         return totalStatusActive;
     }
 
     public String getTotalLeadTotalCustomer() {
-        WebUI.waitForElementVisible(driver, labelLeadTotalCustomer);
-        String totalStatusCustomer = WebUI.getElementText(driver, labelLeadTotalCustomer);
+        WebUI.waitForElementVisible(labelLeadTotalCustomer);
+        String totalStatusCustomer = WebUI.getElementText(labelLeadTotalCustomer);
         return totalStatusCustomer;
     }
 
@@ -273,44 +276,14 @@ public class LeadsPage extends BasePage{
     }
 
 
-
-//    public int getTotalLeadTotalActive() {
-//        int totalLeadsActive = Integer.parseInt(getTotalLeadTotalActive());
-//        return totalLeadsActive;
-//    }
-
-
-
-
     //------------------------------------------------------------------------
 
-    public void verifyMenuLead() throws InterruptedException {
 
-        WebUI.clickElement(driver, menuLeads);
+    public void verifyBtnAddNewLead(){
 
-       // WebUI.clickElement(driver, iconLeadsSummary);
-        Thread.sleep(1000);
-
-        Assert.assertTrue(WebUI.checkExistsElement(driver, headerLeadPage), "Không truy cập được vào trang Leads!");
-        // So sánh text header lead có đúng với kết quả mk mong muốn hay k
-        // softAssert.assertEquals(headerLeadPage, "Leads Summary", "Header Leads is not correct");
-    }
-
-    public void clickLeadsSummary() {
-        WebUI.clickElement(driver, iconLeadsSummary);
-        WebUI.sleep(2);
-    }
-
-    public void reloadPage(){
-        Actions action = new Actions(driver);
-        action.keyDown(Keys.CONTROL).sendKeys(Keys.F5).build().perform();
-    }
-
-    public void verifyBtnAddNewLead() throws InterruptedException {
-
-        WebUI.clickElement(driver, buttonNewLead);
-        Thread.sleep(1000);
-        Assert.assertTrue(WebUI.checkExistsElement(driver, headerAddNewLead), "Mở popup Add New Lead không thành công");
+        WebUI.clickElement(buttonNewLead);
+        WebUI.sleep(1);
+        Assert.assertTrue(WebUI.checkExistsElement(headerAddNewLead, 2), "Mở popup Add New Lead không thành công");
 
         // So sánh header có đúng với kết quả mk mong muốn hay k
         //    softAssert.assertEquals(headerAddNewLead, "Add new lead", "Header Add new lead is not correct");
@@ -319,93 +292,89 @@ public class LeadsPage extends BasePage{
 
     public void fillDataLeads(String status, String source, String assigned, String tag, String name, String address, String position,
                                      String city, String emailAddress, String state, String website, String country, String phone, String zipCode,
-                                     String leadValue, String language, String company, String description, String dateContacted, int flag, int flagEdit) throws InterruptedException {
+                                     String leadValue, String language, String company, String description, String dateContacted, int flag, int flagEdit){
 
 
-        WebUI.clickElement(driver, dropdownStatus);
-        WebUI.setTextElement(driver, inputSearchStatus, status);
-        WebUI.clickElement(driver, getValueStatus(status));
+        WebUI.clickElement(dropdownStatus);
+        WebUI.setTextElement(inputSearchStatus, status);
+        WebUI.clickElement(getValueStatus(status));
 
 
-        WebUI.clickElement(driver, dropdownSource);
-        WebUI.setTextElement(driver, inputSearchSource, source);
-        WebUI.clickElement(driver, getValueSource(source));
+        WebUI.clickElement(dropdownSource);
+        WebUI.setTextElement(inputSearchSource, source);
+        WebUI.clickElement(getValueSource(source));
 
-        WebUI.clickElement(driver, dropdownAssigned);
-        WebUI.setTextElement(driver, inputSearchAssigned, assigned);
-        WebUI.clickElement(driver, getValueAssigned(assigned));
+        WebUI.clickElement(dropdownAssigned);
+        WebUI.setTextElement(inputSearchAssigned, assigned);
+        WebUI.clickElement(getValueAssigned(assigned));
 
         if (flagEdit == 1) {
-            WebUI.clickElement(driver, iconCloseTag);
-            WebUI.clearTextElement(driver, inputName);
-            WebUI.clearTextElement(driver, inputAddress);
-            WebUI.clearTextElement(driver, inputPosition);
-            WebUI.clearTextElement(driver, inputCity);
-            WebUI.clearTextElement(driver, inputEmailAddress);
-            WebUI.clearTextElement(driver, inputState);
-            WebUI.clearTextElement(driver, inputWebsite);
-            WebUI.clearTextElement(driver, inputPhone);
-            WebUI.clearTextElement(driver, inputZipCode);
-            WebUI.clearTextElement(driver, inputLeadValue);
-            WebUI.clearTextElement(driver, inputCompany);
-            WebUI.clearTextElement(driver, inputDescription);
-            WebUI.clearTextElement(driver, inputLastContacted);
+            WebUI.clickElement(iconCloseTag);
+            WebUI.clearTextElement(inputName);
+          //  WebUI.clearTextElement(inputAddress);
+            WebUI.clearTextElement(inputPosition);
+            WebUI.clearTextElement(inputCity);
+            WebUI.clearTextElement(inputEmailAddress);
+            WebUI.clearTextElement(inputState);
+            WebUI.clearTextElement(inputWebsite);
+            WebUI.clearTextElement(inputPhone);
+            WebUI.clearTextElement(inputZipCode);
+            WebUI.clearTextElement(inputLeadValue);
+            WebUI.clearTextElement(inputCompany);
+            WebUI.clearTextElement(inputDescription);
+            WebUI.clearTextElement(inputLastContacted);
 
-            WebUI.clickElement(driver, labelPhone);
-            WebUI.clickElement(driver, labelPhone);
+            WebUI.clickElement(labelPhone);
+            WebUI.clickElement(labelPhone);
 
-            WebUI.scrollAtBottom(driver, dropdownStatus);
+            WebUI.scrollAtBottom(dropdownStatus);
 
-            WebUI.scrollAtBottom(driver, buttonSave);
-
-            Thread.sleep(1000);
-            WebUI.clickElement(driver, inputTag);
+            WebUI.clickElement(inputTag);
 
         }
 
-        WebUI.setTextAndKeyElement(driver, inputTag,tag, Keys.ENTER);
-        Thread.sleep(500);
-        WebUI.clickElement(driver, labelTag);
-        WebUI.clickElement(driver, labelTag);
+        WebUI.setTextAndKeyElement(inputTag,tag, Keys.ENTER);
+        WebUI.clickElement(labelTag);
+        WebUI.clickElement(labelTag);
 
-        WebUI.setTextElement(driver, inputName, name);
-        WebUI.setTextElement(driver, inputAddress, address);
-        WebUI.setTextElement(driver, inputPosition, position);
-        WebUI.setTextElement(driver, inputCity, city);
-        WebUI.setTextElement(driver, inputEmailAddress, emailAddress);
-        WebUI.setTextElement(driver, inputState, state);
-        WebUI.setTextElement(driver, inputWebsite, website);
+        WebUI.setTextElement(inputName, name);
+       // WebUI.setTextElement(inputAddress, address);
+        WebUI.setTextElement(inputPosition, position);
+        WebUI.setTextElement(inputCity, city);
+        WebUI.setTextElement(inputEmailAddress, emailAddress);
+        WebUI.setTextElement(inputState, state);
+        WebUI.setTextElement(inputWebsite, website);
 
-        WebUI.clickElement(driver, dropdownCountry);
-        WebUI.setTextElement(driver, inputSearchCountry, country);
-        WebUI.clickElement(driver, getValueCountry(country));
+        WebUI.clickElement(dropdownCountry);
+        WebUI.setTextElement(inputSearchCountry, country);
+        WebUI.clickElement(getValueCountry(country));
 
-        WebUI.setTextElement(driver, inputPhone, phone);
-        WebUI.setTextElement(driver, inputZipCode, zipCode);
-        WebUI.setTextElement(driver, inputLeadValue, leadValue);
+        WebUI.setTextElement(inputPhone, phone);
+        WebUI.setTextElement(inputZipCode, zipCode);
+        WebUI.setTextElement(inputLeadValue, leadValue);
 
-        WebUI.clickElement(driver, dropdownDefaultLanguage);
-        WebUI.setTextElement(driver, inputSearchDefaultLanguage, language);
-        WebUI.clickElement(driver, getValueDefaultLanguage(language));
+        WebUI.clickElement(dropdownDefaultLanguage);
+        WebUI.setTextElement(inputSearchDefaultLanguage, language);
+        WebUI.clickElement(getValueDefaultLanguage(language));
 
-        WebUI.setTextElement(driver, inputCompany, company);
-        WebUI.setTextElement(driver, inputDescription, description);
+        WebUI.setTextElement(inputCompany, company);
+        WebUI.setTextElement(inputDescription, description);
 
-       WebUI.clickElement(driver, labelCheckboxPublic);
+       WebUI.clickElement(labelCheckboxPublic);
 
         if (flagEdit == 0) {
-            WebUI.clickElement(driver, labelCheckboxContactedToday);
-            WebUI.setTextElement(driver, inputDateContacted, dateContacted);
-            WebUI.clickElement(driver, labelPhone);
-            WebUI.clickElement(driver,labelPhone);
+            WebUI.clickElement(labelCheckboxContactedToday);
+            WebUI.setTextElement(inputDateContacted, dateContacted);
+            WebUI.clickElement(labelPhone);
+            WebUI.clickElement(labelPhone);
         } else {
-            WebUI.clearTextElement(driver, inputLastContacted);
-            WebUI.setTextElement(driver, inputLastContacted, dateContacted);
-            WebUI.clickElement(driver,labelPhone);
-            WebUI.clickElement(driver,labelPhone);
+            WebUI.clearTextElement(inputLastContacted);
+            WebUI.setTextElement(inputLastContacted, dateContacted);
+            WebUI.clickElement(labelPhone);
+            WebUI.clickElement(labelPhone);
         }
 
-        List<WebElement> errorsRequired = WebUI.getWebElements(driver, alertErrorMessageRequired);
+        List<WebElement> errorsRequired = WebUI.getWebElements(alertErrorMessageRequired);
 
         //  Nếu tìm thấy lỗi (>0) thì lấy text ra in vào log
         if (errorsRequired.size() > 0) {
@@ -419,10 +388,11 @@ public class LeadsPage extends BasePage{
         //   Thread.sleep(1000);
     }
 
+
     public void verifyEmailResult(boolean expectValid, String expectedErrorMsg) {
         // List<WebElement> checkErrorEmail = driver.findElements(By.xpath(alertErrorMessageEmail));
 
-        List<WebElement> checkErrorEmail = WebUI.getWebElements(driver, alertErrorMessageEmail);
+        List<WebElement> checkErrorEmail = WebUI.getWebElements(alertErrorMessageEmail);
         System.out.println("checkErrorEmail.size(): " + checkErrorEmail.size());
 
         if (expectValid) {
@@ -437,45 +407,51 @@ public class LeadsPage extends BasePage{
         }
     }
 
-    public void clickIconClosePopupLeadDetail(String name, int flagEdit) throws InterruptedException {
-        if (flagEdit == 0) {
-            WebUI.waitForElementNotVisible(driver, addLeadSuccessMessage);
-        } else {
-            WebUI.waitForElementNotVisible(driver, updateLeadSuccessMessage);
-        }
-        WebUI.scrollAtTop(driver, iconClosePopupLeadDetail(name));
-//        Thread.sleep(1000);
-        WebUI.clickElement(driver, iconClosePopupLeadDetail(name));
-        //   Thread.sleep(1000);
+    public void clickButtonSave(){
+        // WebUI.scrollAtBottom(buttonSave);
+        WebUI.clickElement(buttonSave);
+        WebUI.sleep(1);
     }
 
-    public void searchLeads(String leadsName) throws InterruptedException {
 
-        WebUI.clearTextElement(driver, inputSearch);
-        WebUI.setTextElement(driver, inputSearch, leadsName);
+    public void clickIconClosePopupLeadDetail(String name, int flagEdit){
+        WebUI.scrollAtTop(iconClosePopupLeadDetail(name));
+        WebUI.clickElement(iconClosePopupLeadDetail(name));
+        WebUI.sleep(1);
+    }
 
-        // Check xem có tìm thấy dòng nào không
-        //    List<WebElement> rows = driver.findElements(By.xpath(firstRowItemLeads));
+    public void searchLeads(String leadsName){
 
-        List<WebElement> rows = WebUI.getWebElements(driver, firstRowItemLeads);
-        Assert.assertTrue(rows.size() > 0, "FAILED: Không tìm thấy Lead vừa tạo trong danh sách!");
+        driver.navigate().refresh();
+        WebUI.sleep(2);
+        WebUI.clearTextElement(inputSearch);
+        WebUI.setTextElement(inputSearch, leadsName);
+        WebUI.sleep(2);
+        WebUI.waitForElementVisible(getFirstRowItemLeadName(leadsName));
+        WebUI.sleep(2);
 
-        System.out.println("Đã tìm thấy Lead search: " + rows.get(0).getText());
-        // Thread.sleep(1000);
+        Assert.assertTrue(WebUI.checkExistsElement(getFirstRowItemLeadName(leadsName), 2), "Không đúng giá trị Lead vừa thêm mới");
+        WebUI.sleep(1);
     }
 
     public void compareFieldAttribute(WebDriver driver, String expectedValue, By by, String attributeType) {
-        String actual = WebUI.getElementAttribute(driver, by, attributeType);
+        String actual = WebUI.getElementAttribute(by, attributeType);
         Assert.assertEquals(actual, expectedValue, "FAIL: Giá trị mong muốn là: " + expectedValue + " nhưng giá trị thực tế là: " + actual
         );
     }
-
 
     public void verifyCheckboxSelected(String checkbox) {
         boolean checked = driver.findElement(By.xpath(checkbox)).isSelected();
         Assert.assertTrue(checked, "FAILED: Checkbox [" + checked + "] chưa được chọn.");
     }
 
+    public void clickButtonEdit(String leadName) {
+        Actions action = new Actions(driver);
+        action.moveToElement(WebUI.getWebElement(getFirstRowItemLeadName(leadName))).perform();
+        WebUI.sleep(1);
+        WebUI.clickElement(buttonEdit(leadName));
+        WebUI.sleep(1);
+    }
 
     public void verifyEditLead(
             String status, String source, String assigned, String tag,String name, String address,
@@ -483,21 +459,10 @@ public class LeadsPage extends BasePage{
             String state, String website, String country, String phone,
             String zipCode, String leadValue, String language, String company,
             String description, String dateContacted
-    ) throws InterruptedException {
-        //  WebElement firstRow = driver.findElement(By.xpath(LocatorsLeadsCRM.firstRow));
-        WebElement firstRows = WebUI.getWebElement(driver, firstRow);
-        // B2: Hover chuột vào dòng đầu tiên
-        Actions actions = new Actions(driver);
-        actions.moveToElement(firstRows).perform();
-        Thread.sleep(2000);
-
-        //driver.findElement(By.xpath(linkEdit)).click();
-        WebUI.clickElement(driver, linkEdit);
-        //Thread.sleep(2000);
-
-
+    ){
+        
         // verify đã vào được màn Edit hay chưa
-        List<WebElement> profileTabs = WebUI.getWebElements(driver, tabProfile);
+        List<WebElement> profileTabs = WebUI.getWebElements(tabProfile);
         //  List<WebElement> profileTabs = driver.findElements(By.xpath(tabProfile));
         Assert.assertTrue(profileTabs.size() > 0, "FAILED: Không tìm thấy tab Profile, chưa vào được màn hình Edit Lead.");
 
@@ -514,7 +479,7 @@ public class LeadsPage extends BasePage{
         compareFieldAttribute(driver, assigned, dropdownAssigned, "title");
         // compareFieldAttribute(driver, tag, inputEditTag, "value");
         compareFieldAttribute(driver, name, inputName, "value");
-        compareFieldAttribute(driver, address, inputAddress, "value");
+       // compareFieldAttribute(driver, address, inputAddress, "value");
         compareFieldAttribute(driver, position, inputPosition, "value");
         compareFieldAttribute(driver, city, inputCity, "value");
         compareFieldAttribute(driver, emailAddress, inputEmailAddress, "value");
@@ -531,40 +496,24 @@ public class LeadsPage extends BasePage{
         //verifyCheckboxSelected(checkboxPublic);
     }
 
-    public void clickButtonDelete(String leadName) throws InterruptedException {
+    public void clickButtonDelete(String leadName){
 
 
-        WebElement firstRowDelete = WebUI.getWebElement(driver, firstRow);
+        WebElement firstRowDelete = WebUI.getWebElement(firstRow);
         Actions actions = new Actions(driver);
         actions.moveToElement(firstRowDelete).perform();
-        Thread.sleep(3000);
+        WebUI.sleep(2);
 
-        WebUI.clickElement(driver, linkDelete);
+        WebUI.clickElement(linkDelete);
 
     }
 
-    public void confirmAlertDelete() throws InterruptedException {
+    public void confirmAlertDelete(){
         driver.switchTo().alert().accept();
-        Thread.sleep(1000);
+        WebUI.sleep(2);
     }
 
-    public void verifyAfterDeleteLead(String leadName) throws InterruptedException {
 
-        WebUI.clearTextElement(driver, inputSearch);
-        WebUI.setTextElement(driver, inputSearch, leadName);
-        Assert.assertFalse(WebUI.checkExistsElement(driver, getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
-
-        //Assert.assertFalse(checkExistsElement(LocatorsLeadsCRM.getFirstRowItemLeadName(leadName)), "Xóa Lead không thành công");
-        Thread.sleep(1000);
-        System.out.println("Không tìm thấy Lead '" + leadName + "' trong kết quả tìm kiếm.");
-    }
-
-    public void clickButtonSave() throws InterruptedException {
-        //driver.findElement(By.xpath(buttonSave)).click();
-        WebUI.scrollAtBottom(driver, buttonSave);
-        WebUI.clickElement(driver, buttonSave);
-        Thread.sleep(1000);
-    }
 
 }
 

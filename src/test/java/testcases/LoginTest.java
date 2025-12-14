@@ -1,4 +1,4 @@
-package thuc_hanh;
+package testcases;
 
 import common.BaseTest;
 import org.testng.annotations.Test;

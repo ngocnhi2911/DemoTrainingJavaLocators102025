@@ -1,9 +1,9 @@
 package common;
 
+import keywords.Action_OLD;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import pages.CustomersPage;
 import pages.DashboardPage;
 import pages.LeadsPage;
@@ -30,22 +30,22 @@ public class BasePage {
 //    }
 
     public DashboardPage clickMenuDashboard(){
-        WebUI.clickElement(driver, menuDashboard);
+        WebUI.clickElement(menuDashboard);
         return new DashboardPage(driver);
     }
 
     public LeadsPage clickMenuLead(){
-        WebUI.clickElement(driver, menuLeads);
+        WebUI.clickElement(menuLeads);
         return new LeadsPage(driver);
     }
 
     public TasksPage clickMenuTask(){
-        WebUI.clickElement(driver, menuTasks);
+        WebUI.clickElement(menuTasks);
         return new TasksPage(driver);
     }
 
     public CustomersPage clickMenuCustomers(){
-        WebUI.clickElement(driver, menuCustomers);
+        WebUI.clickElement(menuCustomers);
         return new CustomersPage(driver);
     }
 

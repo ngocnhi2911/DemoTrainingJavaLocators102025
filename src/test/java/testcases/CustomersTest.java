@@ -1,4 +1,4 @@
-package thuc_hanh;
+package testcases;
 
 import common.BaseTest;
 import org.testng.annotations.Test;
@@ -18,9 +18,9 @@ public class CustomersTest extends BaseTest {
         dashboardPage = loginPage.loginCRM();
         customersPage = dashboardPage.clickMenuCustomers();
 
-        customerName = "w";
+        customerName = "a";
       //  customersPage.searchTotalW();
-        for (int i = 0; i<100; i++){
+        for (int i = 0; i<5; i++){
             customersPage.searchTotal(customerName);
             customersPage.hoverTotal(customerName);
             customersPage.clickLinkDelete(customerName);

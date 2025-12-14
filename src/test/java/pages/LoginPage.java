@@ -1,5 +1,6 @@
 package pages;
 
+import keywords.Action_OLD;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,8 @@ public class LoginPage {
     public LoginPage(WebDriver driver){
         //truyền driver từ bên ngoài vô để nhận giá trị được khởi tạo từ class BaseTest
         this.driver = driver; //this: dùng để phân biệt 2 biến cùng tên trong và ngoài
+        new WebUI(driver);
+
     }
 
     // Khai báo đối tượng trong trang đó (là các element) thuộc về trang Login
@@ -54,10 +57,12 @@ public class LoginPage {
 
     private void clickButtonLogin() {
         driver.findElement(buttonLogin).click();
+        WebUI.waitForPageLoaded();
     }
 
     public void navigateToLoginPage(){
         driver.get(url);
+        WebUI.waitForPageLoaded();
     }
     public void loginCRM(String email, String password) {
         navigateToLoginPage();
@@ -82,28 +87,28 @@ public class LoginPage {
     }
 
     public void verifyLoginSuccess() {
-        List<WebElement> checkMenuDashboard = WebUI.getWebElements(driver, menuDashboard);
+        List<WebElement> checkMenuDashboard = WebUI.getWebElements(menuDashboard);
         System.out.println("checkMenuDashboard: " + checkMenuDashboard.size());
         Assert.assertTrue(checkMenuDashboard.size() > 0, "Menu Dashboard is not displayed after login");
         System.out.println("Đăng nhập CRM thành công");
     }
 
     public void verifyLoginFailWithEmailOrPasswordInvalid() {
-        boolean isElementErrorMessageInvalid = WebUI.getWebElements(driver, errorMessageInvalidEmailOrPassword).size()>0;
+        boolean isElementErrorMessageInvalid = WebUI.getWebElements(errorMessageInvalidEmailOrPassword).size()>0;
         System.out.println("isElementErrorMessageInvalid: " + isElementErrorMessageInvalid);
         Assert.assertTrue(isElementErrorMessageInvalid, "Error message for invaild email not displayed");
         System.out.println("Đăng nhập CRM thất bại");
     }
 
     public void verifyLoginFailWithEmailNull() {
-        List<WebElement> isElementErrorMessageEmailNull = WebUI.getWebElements(driver, alertErrorMessageEmailRequired);
+        List<WebElement> isElementErrorMessageEmailNull = WebUI.getWebElements(alertErrorMessageEmailRequired);
         System.out.println("isElementErrorMessageEmailNull: " + isElementErrorMessageEmailNull.size());
         Assert.assertTrue(isElementErrorMessageEmailNull.size() > 0, "Error message for required email null");
         System.out.println("Đăng nhập CRM thất bại");
     }
 
     public void verifyLoginFailWithPasswordNull() {
-        boolean isElementErrorMessagePasswordNull = WebUI.getWebElements(driver, alertErrorMessagePasswordRequired).size()>0;
+        boolean isElementErrorMessagePasswordNull = WebUI.getWebElements(alertErrorMessagePasswordRequired).size()>0;
         System.out.println("isElementErrorMessagePasswordNull: " + isElementErrorMessagePasswordNull);
         Assert.assertTrue(isElementErrorMessagePasswordNull, "Error message for required password null");
         System.out.println("Đăng nhập CRM thất bại");

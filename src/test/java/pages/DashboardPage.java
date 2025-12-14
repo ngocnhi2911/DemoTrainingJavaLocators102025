@@ -1,6 +1,7 @@
 package pages;
 
 import common.BasePage;
+import keywords.Action_OLD;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +13,7 @@ public class DashboardPage extends BasePage {
     public DashboardPage(WebDriver driver){
         super(driver); // phải dùng super do khi kế thừa 1 class mà nó có tham số trong hàm xây dựng phải cần super
         this.driver = driver;
+        new WebUI(driver);
     }
 
     private By buttonDashboardOption = By.xpath("//div[@class='screen-options-btn']");
@@ -19,7 +21,7 @@ public class DashboardPage extends BasePage {
 
 
     public void verifyDashboardPageDisplayed(){
-        boolean isElementDisplayed = WebUI.getWebElements(driver, buttonDashboardOption).size()>0;
+        boolean isElementDisplayed = WebUI.getWebElements(buttonDashboardOption).size()>0;
         Assert.assertTrue(isElementDisplayed, "Dashboard Page is not displayed");
     }
 
