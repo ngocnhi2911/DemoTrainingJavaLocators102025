@@ -8,6 +8,7 @@ import pages.LoginPage;
 import pages.TasksPage;
 
 public class TasksTest extends BaseTest {
+    // Task
     String taskName = "Yến Nhi Task 1";
     String hourlyRate = "10";
     String startDate = "14-12-2025";
@@ -21,6 +22,29 @@ public class TasksTest extends BaseTest {
     String follower = "Admin Example";
     String tag = "JSC_NEW";
     String description;
+
+    //Lead
+    String status = "Active";
+    String source = "Google";
+    String assigned = "Admin Anh Tester";
+    String tag_lead = "JSC_NEW";
+    String leadName = "Yến Nhi 6";
+    String address = "Đại Linh";
+    String position = "Tester";
+    String city = "Việt Nam";
+    String emailAddress = "ngocnhi6@gmail.com";
+    String state = "Hà Nội";
+    String website = "htester.com.vn";
+    String country = "Vietnam";
+    String phone = "0965898989";
+    String zipCode = "0001";
+    String leadValue = "12345";
+    String language = "Vietnamese";
+    String company = "NODO JSC";
+    String description_lead = "htest add new lead";
+    String dateContacted = "10-11-2025 00:00:00";
+    int flag = 1;
+    int flagEdit = 0;
 
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
@@ -83,75 +107,47 @@ public class TasksTest extends BaseTest {
         tasksPage.searchTasks(btTasks.taskName);
 
     }
-/*
+
     @Test(priority = 3)
     public void testAddLeadAndTask() throws InterruptedException{
         loginPage = new LoginPage(driver);
         dashboardPage = loginPage.loginCRM();
-
         leadsPage = dashboardPage.clickMenuLead();
-        LeadsTest testBT = new LeadsTest();
 
-        testBT.status = "Active";
-        testBT.source = "Google";
-        testBT.assigned = "Admin Anh Tester";
-        testBT.tag = "JSC_NEW";
-        testBT.leadName = "Yến Nhi 6";
-        testBT.address = "Đại Linh";
-        testBT.position = "Tester";
-        testBT.city = "Việt Nam";
-        testBT.emailAddress = "ngocnhi6@gmail.com";
-        testBT.state = "Hà Nội";
-        testBT.website = "htester.com.vn";
-        testBT.country = "Vietnam";
-        testBT.phone = "0965898989";
-        testBT.zipCode = "0001";
-        testBT.leadValue = "12345";
-        testBT.language = "Vietnamese";
-        testBT.company = "NODO JSC";
-        testBT.description = "htest add new lead";
-        testBT.dateContacted = "10-11-2025 00:00:00";
-        testBT.flag = 1;
-        testBT.flagEdit = 0;
+        LeadsTest leadsTest = new LeadsTest();
 
-        //click btn addnewLead
+        leadsTest.leadName = "Yến Nhi 1";
+        leadsTest.emailAddress = "ngocnhi1@gmail.com";
+
         leadsPage.clickIconLeadsSummary();
         leadsPage.verifyLeadSummaryDisplay();
         leadsPage.verifyBtnAddNewLead();
 
-        leadsPage.fillDataLeads(testBT.status, testBT.source, testBT.assigned, testBT.tag, testBT.leadName, testBT.address, testBT.position, testBT.city,
-                testBT.emailAddress, testBT.state, testBT.website, testBT.country, testBT.phone, testBT.zipCode, testBT.leadValue, testBT.language,
-                testBT.company, testBT.description, testBT.dateContacted,testBT.flag, testBT.flagEdit);
+        leadsPage.fillDataLeads(status, source, assigned, tag_lead, leadsTest.leadName, address, position, city,
+                leadsTest.emailAddress, state, website, country, phone, zipCode, leadValue, language,
+                company, description_lead, dateContacted,flag, flagEdit);
 
         leadsPage.verifyEmailResult(true, "");
         leadsPage.clickButtonSave();
-        leadsPage.clickIconClosePopupLeadDetail(testBT.leadName, 0);
-        leadsPage.searchLeads(testBT.leadName);
+        leadsPage.clickIconClosePopupLeadDetail(leadsTest.leadName, 0);
+        leadsPage.searchLeads(leadsTest.leadName);
+
 
         tasksPage = dashboardPage.clickMenuTask();
 
         TasksTest btTasks = new TasksTest();
 
-        btTasks.taskName = testBT.leadName + " - " + testBT.emailAddress;
-        btTasks.hourlyRate = "10";
-        btTasks.startDate = "14-12-2025";
-        btTasks.dueDate = "18-12-2025";
-        btTasks.priority = "High";
-        btTasks.repeatEvery = "1 Month";
-        btTasks.totalCycles = "56622";
+        btTasks.taskName = leadsTest.leadName + " - " + leadsTest.emailAddress;
         btTasks.relatedTo = "Lead";
        // btTasks.typeRelatedTo = "Yến Nhi";
-        btTasks.typeRelatedTo = testBT.leadName;
-        btTasks.assignee = "Admin Anh Tester";
-        btTasks.follower = "Admin Example";
-        btTasks.tag = "JSC_NEW";
+        btTasks.typeRelatedTo = leadsTest.leadName + " - " + leadsTest.emailAddress;
 
         tasksPage.clickBtnAddNewTask();
-        tasksPage.addNewTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate, btTasks.priority, btTasks.repeatEvery, btTasks.totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, btTasks.assignee, btTasks.follower, btTasks.tag);
+        tasksPage.addNewTasks(btTasks.taskName, hourlyRate, startDate, dueDate, priority, repeatEvery, totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, assignee, follower, tag);
         tasksPage.clickButtonSave();
         tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 0);
         tasksPage.searchTasks(btTasks.taskName);
     }
 
- */
+
 }
