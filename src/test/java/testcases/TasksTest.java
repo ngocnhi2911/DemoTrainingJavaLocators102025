@@ -132,6 +132,42 @@ public class TasksTest extends BaseTest {
         leadsPage.clickIconClosePopupLeadDetail(leadsTest.leadName, 0);
         leadsPage.searchLeads(leadsTest.leadName);
 
+        leadsPage.clickButtonEdit(leadsTest.leadName);
+
+        leadsPage.verifyEditLead(status, source, assigned, tag, leadsTest.leadName, address, position, city,
+                leadsTest.emailAddress, state, website, country, phone, zipCode, leadValue, language,
+                company, description, dateContacted);
+
+        leadsTest.status = "Active";
+        leadsTest.source = "Facebook";
+        leadsTest.assigned = "Admin Anh Tester";
+        leadsTest.tag = "JSC_NEW";
+        leadsTest.leadName = "Yến Nhi 1";
+        leadsTest.address = "Thanh Oai";
+        leadsTest.position = "Tester";
+        leadsTest.city = "Việt Nam";
+        leadsTest.emailAddress = "ngocnhi1@gmail.com";
+        leadsTest.state = "Hà Nội";
+        leadsTest.website = "htester.com.vn";
+        leadsTest.country = "Vietnam";
+        leadsTest.phone = "0965898989";
+        leadsTest.zipCode = "777";
+        leadsTest.leadValue = "8888";
+        leadsTest.language = "Vietnamese";
+        leadsTest.company = "NODO JSC";
+        leadsTest.description = "htest add new lead";
+        leadsTest.dateContacted = "10-11-2025 00:00:00";
+        leadsTest.flag = 0;
+        leadsTest.flagEdit = 1;
+
+        leadsPage.fillDataLeads(leadsTest.status, leadsTest.source, leadsTest.assigned, leadsTest.tag, leadsTest.leadName, leadsTest.address, leadsTest.position, leadsTest.city,
+                leadsTest.emailAddress, leadsTest.state, leadsTest.website, leadsTest.country, leadsTest.phone, leadsTest.zipCode, leadsTest.leadValue, leadsTest.language,
+                leadsTest.company, leadsTest.description, leadsTest.dateContacted,leadsTest.flag, leadsTest.flagEdit);
+
+        leadsPage.clickButtonSave();
+        leadsPage.clickIconClosePopupLeadDetail(leadsTest.leadName,0);
+        leadsPage.searchLeads(leadsTest.leadName);
+
 
         tasksPage = dashboardPage.clickMenuTask();
 
@@ -146,6 +182,25 @@ public class TasksTest extends BaseTest {
         tasksPage.addNewTasks(btTasks.taskName, hourlyRate, startDate, dueDate, priority, repeatEvery, totalCycles, btTasks.relatedTo, btTasks.typeRelatedTo, assignee, follower, tag);
         tasksPage.clickButtonSave();
         tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 0);
+        tasksPage.searchTasks(btTasks.taskName);
+
+
+        tasksPage.verifyEditTask(btTasks.taskName, hourlyRate + ".00", startDate, dueDate, priority, repeatEvery, totalCycles, relatedTo, typeRelatedTo, assignee, follower, tag);
+
+        btTasks.taskName = "Yến Nhi Task 2";
+        btTasks.hourlyRate  = "20";
+        btTasks.startDate  = "20-12-2025";
+        btTasks.dueDate  = "25-12-2025";
+        btTasks.priority  = "High";
+        btTasks.repeatEvery  = "2 Months";
+        btTasks.relatedTo  = "Lead";
+        btTasks.typeRelatedTo  = "Yến Nhi";
+        btTasks.tag = "HTest";
+        btTasks.description = "description iframe";
+
+        tasksPage.editTasks(btTasks.taskName, btTasks.hourlyRate, btTasks.startDate, btTasks.dueDate ,  btTasks.priority , btTasks.repeatEvery , btTasks.relatedTo , btTasks.typeRelatedTo, btTasks.tag,  btTasks.description);
+        tasksPage.clickButtonSave();
+        tasksPage.clickClosePopupTaskDetail(btTasks.taskName, 1);
         tasksPage.searchTasks(btTasks.taskName);
     }
 
